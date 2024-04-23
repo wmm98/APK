@@ -195,3 +195,212 @@ class OSApi(TelApi):
     def getAirplaneModeEnable(self):
         return self.getSystemControl().getAirplaneModeEnable()
 
+    def setGoogleServiceEnable(self, enable):
+        return self.getApplicationControl().setGoogleServiceEnable(enable)
+
+    def getGoogleServiceEnable(self):
+        return self.getApplicationControl().getGoogleServiceEnable()
+
+    def setAppEnable(self, packageName, enable):
+        return self.getApplicationControl().setAppEnable(packageName, enable)
+
+    def setDeviceOwner(self, admin):
+        return self.getApplicationControl().setDeviceOwner(admin)
+
+    def setKioskEnable(self, packageName, enable):
+        return self.getApplicationControl().setKioskEnable(packageName, enable)
+
+    def getKioskEnable(self, packageName):
+        return self.getApplicationControl().getKioskEnable(packageName)
+
+    def startAppKeepAlive(self, componentName):
+        return self.getApplicationControl().startAppKeepAlive(componentName)
+
+    def stopAppKeepAlive(self):
+        return self.getApplicationControl().stopAppKeepAlive()
+
+    def setLauncher(self, launcher):
+        return self.getApplicationControl().setLauncher(launcher)
+
+    def getLauncher(self):
+        """
+        :return:launcher package name
+        """
+        return self.getSystemControl().getLauncher()
+
+    def installApk(self, apkFilePath):
+        return self.getApplicationControl().installApk(apkFilePath)
+
+    def unInstallApp(self, packageName):
+        return self.getApplicationControl().unInstallApp(packageName)
+
+    def setAppInstallBlackList(self, packageName):
+        return self.getSystemControl().setAppInstallBlackList(packageName)
+
+    def getAppInstallBlackList(self):
+        """
+
+        :return: return String
+        """
+        return self.getSystemControl().getAppInstallBlackList()
+
+    def setAppUninstallable(self, packageName):
+        # 设置应用防卸载列表
+        return self.getApplicationControl().setAppUninstallable(packageName)
+
+    def getAppUninstallable(self):
+        return self.getApplicationControl().getAppUninstallable()
+
+    def setSystemAppDisable(self, packageName):
+        return self.getApplicationControl().setSystemAppDisable(packageName)
+
+    def getSystemAppsDisable(self):
+        return self.getApplicationControl().getSystemAppsDisable()
+
+    def setDeviceAdminEnable(self, admin, enable):
+        return self.getApplicationControl().setDeviceAdminEnable(admin, enable)
+
+    def getDeviceAdminEnable(self, admin):
+        return self.getApplicationControl().getDeviceAdminEnable(admin)
+
+    def setAppUpperPermission(self, t_type, packageName, enable):
+        """
+        :param t_type:
+        :param packageName:
+        :param enable:
+        type 可以在ApiConstants 查询
+        OP_SYSTEM_ALERT_WINDOW 24 显示再其他应用上层
+        OP_WRITE_SETTINGS 23 修改系统设置
+        OP_REQUEST_INSTALL_PACKAGES 66 安装未知应用
+        :return:
+        """
+        return self.getApplicationControl().setAppUpperPermission(t_type, packageName, enable)
+
+    def setBootLogo(self, path):
+        return self.getDisplayControl().setBootLogo(path)
+
+    def setBootAnimation(self, path):
+        return self.getApplicationControl().setBootAnimation(path)
+
+    def setWallPaper(self, path):
+        return self.getApplicationControl().setWallPaper(path)
+
+    def setBrightness(self, level):
+        # 0~255
+        return self.getApplicationControl().setBrightness(level)
+
+    def getBrightness(self):
+        return self.getDisplayControl().getBrightness()
+
+    def setFontSize(self, size):
+        """
+
+        :param size: size：字体大小{eg:0,1,2,3}
+        :return:
+        """
+        return self.getDisplayControl().setFontSize(size)
+
+    def getFontSize(self):
+        return self.getDisplayControl().getFontSize()
+
+    def setQsTiles(self, tiles):
+        """
+
+        :param titles: 快捷选项{eg: wifi,bt}
+        :return:
+        """
+        return self.getDisplayControl().setQsTiles(tiles)
+
+    def getQsTiles(self):
+        return self.getDisplayControl().getQsTiles()
+
+    def setBatteryPercentEnable(self, enable):
+        return self.getDisplayControl().setBatteryPercentEnable()
+
+    def getBatteryPercentEnable(self):
+        return self.getDisplayControl().getBatteryPercentEnable()
+
+    def setStatusbarEnable(self, enable):
+        # 设置状态栏显示
+        return self.getDisplayControl().setStatusbarEnable(enable)
+
+    def getStatusbarEnable(self):
+        # 获取状态栏显示
+        return self.getDisplayControl().getStatusbarEnable()
+
+    def setStatusbarDropEnable(self, enable):
+        # 设置状态栏下拉状态
+        return self.getDisplayControl().setStatusbarDropEnable(enable)
+
+    def getStatusbarDrop(self):
+        # 获取状态栏下拉状态
+        return self.getDisplayControl().getStatusbarDrop()
+
+    def setNavigationBarEnable(self, enable):
+        return self.getDisplayControl().setNavigationBarEnable(enable)
+
+    def getNavigationBarEnable(self):
+        return self.getDisplayControl().getNavigationBarEnable()
+
+    def getDeviceModel(self):
+        # 获取设备的型号信息
+        return self.getDisplayControl().getDeviceModel()
+
+    def getProductModel(self):
+        # 获取产品型号
+        return self.getDisplayControl().getProductModel()
+
+    def getSerialNumber(self):
+        return self.getDisplayControl().getSerialNumber()
+
+    def getBuildNumber(self):
+        return self.getDisplayControl().getBuildNumber()
+
+    def getBaseband(self):
+        return self.getDisplayControl().getBaseband()
+
+    def getIMEI(self, slot):
+        # : 卡道（eg：0，1）
+        return self.getDisplayControl().getIMEI(slot)
+
+    def getMEID(self, slot):
+        # : 卡道（eg：0，1）
+        return self.getDisplayControl().getMEID(slot)
+
+    def getBootloader(self):
+        # 获取设备SP的bootloader信息
+        return self.getDisplayControl().getBootloader()
+
+    def getSecurityOS(self):
+        # 获取设备SP的OS信息
+        return self.getDisplayControl().getSecurityOS()
+
+    def getBootWizard(self):
+        # 获取开机向导版本
+        return self.getDisplayControl().getBootWizard()
+
+    def getCurrentNetWorkType(self):
+        """
+
+        :return: {eg:"unknown","ethernet","wifi","2G","3G","4G"]
+        """
+        return self.getDisplayControl().getCurrentNetWorkType()
+
+    def getSimSignalStrength(self, slot):
+        # 获取信号强度等级（只包含SIM卡）
+        return self.getDisplayControl().getSimSignalStrength(slot)
+
+    def getSimRSRP(self, slot):
+        # 获取信号接收功率（只包含SIM卡）
+        return self.getDisplayControl().getSimRSRP(slot)
+
+    def getSimRSSINR(self, slot):
+        # 获取信号与干扰噪声比（只包含SIM卡）
+        return self.getDisplayControl().getSimRSSINR(slot)
+
+    def getSimPCI(self):
+        # getSimPCI
+        return self.getDisplayControl().getSimPCI()
+
+
+
