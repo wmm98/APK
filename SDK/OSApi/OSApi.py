@@ -129,3 +129,69 @@ class OSApi(TelApi):
 
     def setScreenOffTimeoutConfiguration(self, ScreenOffTimeout):
         return self.getSystemControl().setScreenOffTimeoutConfiguration(ScreenOffTimeout)
+
+    def getScreenOffTimeoutConfiguration(self):
+        return self.getSystemControl().getScreenOffTimeoutConfiguration()
+
+    def setLanguageConfiguration(self, language):
+        """
+        :param language: zh_CN en_US
+        :return:
+        """
+        return self.getSystemControl().setLanguageConfiguration(language)
+
+    def getLanguageConfiguration(self):
+        return self.getSystemControl().getLanguageConfiguration()
+
+    def setTimeZoneConfiguration(self, timeZone):
+        """
+        :param timeZone: Asia/Shanghai
+        :return:
+        """
+        return self.getSystemControl().setTimeZoneConfiguration(timeZone)
+
+    def getTimeZoneConfiguration(self):
+        return self.getSystemControl().getTimeZoneConfiguration()
+
+    def setExternalModelConfiguration(self, name):
+        return self.getSystemControl().setExternalModelConfiguration(name)
+
+    def getExternalModelConfiguration(self):
+        return self.getSystemControl().getExternalModelConfiguration()
+
+    def setManufacturerConfiguration(self, name):
+        return self.getSystemControl().setManufacturerConfiguration(name)
+
+    def getManufacturerConfiguration(self):
+        return self.getSystemControl().getManufacturerConfiguration()
+
+    def shutdown(self):
+        return self.getSystemControl().shutdown()
+
+    def reboot(self):
+        return self.getSystemControl().reboot()
+
+    def wipeData(self):
+        return self.getSystemControl().wipeData()
+
+    def wakeup(self):
+        return self.getSystemControl().wakeup()
+
+    def sleep(self):
+        return self.getSystemControl().sleep()
+
+    def setNfcEnable(self, enable):
+        return self.getSystemControl().setNfcEnable(enable)
+
+    def getNfcEnable(self):
+        return self.getSystemControl().getNfcEnable()
+
+    def doScreenCapture(self, displayId, path):
+        return self.getSystemControl().doScreenCapture(displayId, path)
+
+    def setAirplaneModeEnable(self, enable):
+        return self.setAirplaneModeEnable(enable)
+
+    def getAirplaneModeEnable(self):
+        return self.getSystemControl().getAirplaneModeEnable()
+

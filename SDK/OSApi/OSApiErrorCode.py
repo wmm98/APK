@@ -3,7 +3,7 @@ from jnius import autoclass
 
 class OSApiErrorCode:
     ErrorCode = autoclass('com.android.common.osapi.OSApiErrorCode')
-    ApiErrorCode = ErrorCode()
+    ApiErrorCode = ErrorCode
 
     OK = ApiErrorCode.OK
     ERR_SYS_TIMEOUT = ApiErrorCode.ERR_SYS_TIMEOUT

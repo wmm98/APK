@@ -1,7 +1,7 @@
 from jnius import autoclass
 
 
-class OsApiConstants:
+class OSApiConstants:
     AbleType = autoclass('com.android.common.osapi.common.OsApiConstants$AbleType')
     KeyType = autoclass('com.android.common.osapi.common.OsApiConstants$KeyType')
     SettingsType = autoclass('com.android.common.osapi.common.OsApiConstants$SettingsType')
@@ -71,5 +71,5 @@ class OsApiConstants:
 
 
 if __name__ == '__main__':
-    print(OsApiConstants().TIMEOUT_2_MINUTES)
-    print(type(OsApiConstants().TIMEOUT_2_MINUTES))
+    print(OSApiConstants().TIMEOUT_2_MINUTES)
+    print(type(OSApiConstants().TIMEOUT_2_MINUTES))
