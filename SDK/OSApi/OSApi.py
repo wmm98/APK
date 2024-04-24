@@ -1,4 +1,7 @@
 from .PublicApi import TelApi
+from jnius import autoclass
+
+arrayList = autoclass('java.util.ArrayList')
 
 
 class OSApi(TelApi):
@@ -123,7 +126,7 @@ class OSApi(TelApi):
         # 暂时用不到， OsWifiConfiguration为实例化的类，详细参照接口源码
         return self.getSystemControl().setWifiConfiguration(OsWifiConfiguration)
 
-    def setWifiApConfiguration(self, apName,  password):
+    def setWifiApConfiguration(self, apName, password):
         # 暂时用不到, 详细参照接口源码
         return self.getSystemControl().setWifiApConfiguration(apName, password)
 
@@ -401,6 +404,165 @@ class OSApi(TelApi):
     def getSimPCI(self):
         # getSimPCI
         return self.getDisplayControl().getSimPCI()
+
+    def getSimSignalCoverageLevel(self):
+        # 获取无线信号覆盖等级（只包含SIM卡）
+        return self.getDisplayControl().getSimSignalCoverageLevel()
+
+    def getSimCellLocationInfo(self):
+        # 获取小区位置信息（只包含SIM卡）
+        return self.getDisplayControl().getSimCellLocationInfo()
+
+    def getEthernetMac(self):
+        return self.getDisplayControl().getEthernetMac()
+
+    def getWifiMac(self):
+        return self.getDisplayControl().getWifiMac()
+
+    def getBluetoothMac(self):
+        return self.getDisplayControl().getBluetoothMac()
+
+    def getBatteryStatus(self):
+        # 获取电池状态
+        return self.getDisplayControl().getBatteryStatus()
+
+    def getBatteryLevel(self):
+        # 获取电池当前电量
+        return self.getDisplayControl().getBatteryLevel()
+
+    def getMemorySize(self):
+        """
+
+        :return: int
+        """
+        return self.getDisplayControl().getMemorySize()
+
+    def getStorageSize(self):
+        """
+
+        :return: int
+        """
+        return self.getDisplayControl().getStorageSize()
+
+    def getMemoryUsage(self):
+        """
+
+        :return: float
+        """
+        return self.getDisplayControl().getMemoryUsage()
+
+    def getStorageUsage(self):
+        # 获取存储使用率
+        return self.getDisplayControl().getStorageUsage()
+
+    def getTotalCpuUsage(self):
+        # 获取总CPU使用率
+        return self.getDisplayControl().getTotalCpuUsage()
+
+    def getCpuTemperature(self):
+        """
+
+        :return: float
+        """
+        return self.getDisplayControl().getCpuTemperature()
+
+    def getUsbDevices(self):
+        """
+
+        :return: # 获取接入的USB设备
+        """
+        return self.getDisplayControl().getUsbDevices()
+
+    def getScreenInfo(self, screenId):
+        return self.getDisplayControl().getScreenInfo(screenId)
+
+    def setIpAddressBlackList(self, blackList):
+        # 重启后黑名设置的失效
+        # 创建一个空的 Java ArrayList 对象
+        java_list = arrayList()
+        # Python 列表
+        # 将 Python 列表中的元素添加到 Java ArrayList 中
+        for item in blackList:
+            java_list.add(item)
+        return self.getNetworkControl().setIpAddressBlackList(java_list)
+
+    def getIpAddressBlackList(self):
+        return list(self.getDisplayControl().getIpAddressBlackList())
+
+    def clearIpAddressBlackList(self):
+        return self.getNetworkControl().clearIpAddressBlackList()
+
+    def setIpAddressWhiteList(self, whiteList):
+        # 重启后黑名设置的失效
+        # 创建一个空的 Java ArrayList 对象
+        java_list = arrayList()
+        # Python 列表
+        # 将 Python 列表中的元素添加到 Java ArrayList 中
+        for item in whiteList:
+            java_list.add(item)
+        return self.getNetworkControl().setIpAddressWhiteList(java_list)
+
+    def getIpAddressWhiteList(self):
+        return list(self.getDisplayControl().getIpAddressWhiteList())
+
+    def clearIpAddressWhiteList(self):
+        return self.getNetworkControl().clearIpAddressWhiteList()
+
+    def queryTotalDataTraffic(self, networkType, startTime, endTime):
+        """
+
+        :param networkType: DATA_TRAFFIC_TYPE_MOBILE, DATA_TRAFFIC_TYPE_WIFI
+        :param startTime: 精确到毫秒
+        :param endTime:
+        :return:
+        """
+        return self.getNetworkControl().queryTotalDataTraffic(networkType, startTime, endTime)
+
+    def queryAllAppDataTraffic(self, networkType, startTime, endTime):
+        dict_res = self.getNetworkControl().queryAllAppDataTraffic(networkType, startTime, endTime)
+        python_dict = {}
+        for entry in dict_res.entrySet():
+            python_dict[str(entry.getKey())] = entry.getValue()
+        return python_dict
+
+    def copyFile(self, srcPath, destPath):
+        return self.getMiscControl().copyFile(srcPath, destPath)
+
+    def setBootStartupApp(self, packageName):
+        # 开机启动应用的包名
+        return self.getMiscControl().setBootStartupApp(packageName)
+
+    def setLockScreenPassword(self, password):
+        return self.getMiscControl().setLockScreenPassword(password)
+
+    def clearLockScreenPassword(self):
+        return self.getMiscControl().clearLockScreenPassword()
+
+    def dataTransmissionCheck(self):
+        return self.getMiscControl().dataTransmissionCheck()
+
+    def startLogCollect(self, minute):
+        return self.getMiscControl().startLogCollect(minute)
+
+    def stopLogCollect(self):
+        return self.getMiscControl().stopLogCollect()
+
+    def getAttestationKey(self):
+        # 认证密钥编号
+        return self.getMiscControl().getAttestationKey()
+
+    def setAttestationKey(self, fileName):
+        return self.getMiscControl().setAttestationKey(fileName)
+
+    def getServerVersion(self):
+        # osapi服务端版本
+        return self.getCommonControl().getServerVersion()
+
+    def getClientVersion(self):
+        # osapi客户端版本（sdk版本）
+        return self.getCommonControl().getClientVersion()
+
+
 
 
 
