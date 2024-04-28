@@ -38,7 +38,7 @@ class OperateFile:
         shell.SendCommand("rm -rf %s" % direName)
 
     def copyFile(self, source, destination):
-        shell.SendCommand("cp %s %s" % (source, destination))
+        shell.SendCommand("cp -rf %s %s" % (source, destination))
 
     def osCreateDirectory(self, DireName):
         os.mkdir(DireName)
@@ -66,12 +66,12 @@ class OutPutTestResult:
 
     def logInfo(self, msg):
         fd = open(self.testResultLogPath, "a+")
-        fd.write("[INFO " + get_current_time() + "]" + msg)
+        fd.write("[INFO " + get_current_time() + "]" + msg + "\n")
         fd.close()
 
     def logErr(self, msg):
         fd = open(self.testResultLogPath, "a+")
-        fd.write("[ERROR " + get_current_time() + "]" + msg)
+        fd.write("[ERROR " + get_current_time() + "]" + msg + "\n")
         fd.close()
 
 

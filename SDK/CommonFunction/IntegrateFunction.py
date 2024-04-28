@@ -23,9 +23,12 @@ class CommFunction:
         # # self.chDirPath(ExternalStorageDire))
         if Config.testDirectory not in os.listdir(self.getCurrentPath()):
             fileOperate.osCreateDirectory(Config.testDirectory)
-        # self.chDirPath(Config.testDirectory)
-        if Config.screenShotDirectory not in os.listdir(os.path.join(self.getCurrentPath(), Config.testDirectory)):
+        self.chDirPath(Config.testDirectory)
+        if Config.screenShotDirectory not in os.listdir(self.getCurrentPath()):
             fileOperate.osCreateDirectory(Config.screenShotDirectory)
+        self.chDirPath("..")
+        print(self.getCurrentPath())
+
         # lsInfo = self.lsDirePath()
         # if Config.actualResultFileName not in lsInfo:
         #     with open(Config.actualResultFileName, "w+") as f:
