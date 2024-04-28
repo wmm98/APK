@@ -561,8 +561,3 @@ class OSApi(TelApi):
     def getClientVersion(self):
         # osapi客户端版本（sdk版本）
         return self.getCommonControl().getClientVersion()
-
-
-
-
-

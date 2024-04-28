@@ -1,24 +1,30 @@
 from jnius import autoclass
 
+OSShell = autoclass('com.android.common.telpo.utils.ShellUtils')
+
 
 class OSAPiShell:
     def __init__(self):
-        OSShell = autoclass('com.android.common.telpo.utils.ShellUtils')
         self.Shell = OSShell
         self.isSend = True
+        self.result = -1
+        self.successMsg = ""
 
     def SendCommand(self, cmd):
         res = self.Shell.execCommand(cmd, self.isSend)
-        return {"result": res.result, "successMsg": res.successMsg}
+        self.result = res.result
+        self.successMsg = res.successMsg
 
     def getResult(self):
-        # print(self.Result.result)
-        pass
+        return self.result
+
+    def getCmdResult(self):
+        return self.successMsg
 
 
 if __name__ == '__main__':
     shell = OSAPiShell()
-    res = shell.SendCommand("ls data")
+    shell.SendCommand("ls data")
 
     # print("返回的结果:", res)
     # print(res.result)

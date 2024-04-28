@@ -1,28 +1,27 @@
-
 class TelApi:
     def __init__(self, osApi):
-        self.OSApi = osApi
+        self.TelOSApi = osApi
 
     def getSystemControl(self):
-        return self.OSApi.getSystemControl()
+        return self.TelOSApi.getSystemControl()
 
     def getApplicationControl(self):
-        return self.OSApi.getApplicationControl()
+        return self.TelOSApi.getApplicationControl()
 
     def getDisplayControl(self):
-        return self.OSApi.getDisplayControl()
+        return self.TelOSApi.getDisplayControl()
 
     def getDeviceInfoControl(self):
-        return self.OSApi.getDeviceInfoControl()
+        return self.TelOSApi.getDeviceInfoControl()
 
     def getNetworkControl(self):
-        return self.OSApi.getNetworkControl()
+        return self.TelOSApi.getNetworkControl()
 
     def getMiscControl(self):
-        return self.OSApi.getMiscControl()
+        return self.TelOSApi.getMiscControl()
 
     def getCommonControl(self):
-        return self.OSApi.getCommonControl()
+        return self.TelOSApi.getCommonControl()
 
     def getSelfCheckControl(self):
-        return self.OSApi.getSelfCheckControl()
+        return self.TelOSApi.getSelfCheckControl()
