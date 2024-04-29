@@ -6,6 +6,7 @@ arrayList = autoclass('java.util.ArrayList')
 
 class OSApi(TelApi):
     def __init__(self, osApi):
+        # pass
         TelApi.__init__(self, osApi)
 
     def setAppRootEnable(self, enable):

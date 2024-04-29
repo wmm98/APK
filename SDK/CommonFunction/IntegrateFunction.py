@@ -1,20 +1,40 @@
 from SDK.OSApi import OSAPiShell, OSApi
 from SDK.OSApi.OSApiConstants import OSApiConstants
 from SDK.OSApi.OSApiErrorCode import OSApiErrorCode
-from SDK.CommonFunction.OperateFile import OperateFile
+from SDK.CommonFunction.OperateFile import OperateFile, OutPutIniResult, OutPutTestResult
 from SDK.CommonFunction.Config import Config
 from jnius import autoclass
 import os
 import time
 
+PythonActivity = autoclass('org.kivy.android.PythonActivity')
+Context = PythonActivity.mActivity
+Api = autoclass('com.android.common.osapi.OSApi')
+
+testApi = OSApi.OSApi(Api(Context))
 fileOperate = OperateFile()
 Environment = autoclass('android.os.Environment')
 shell = OSAPiShell.OSAPiShell()
+iniFile = OutPutIniResult()
+logFile = OutPutTestResult()
 
 
 class CommFunction:
     def __init__(self):
         pass
+
+    def getKeyStatus(self, section, key):
+        logFile.logInfo("%s状态" % key)
+        keyStatus = testApi.getKeyEnable(OSApiConstants.KEY_TYPE_BACK)
+        if keyStatus == OSApiConstants.ABLE_TYPE_ENABLE:
+            iniFile.addKeyValue(section, key, "on")
+            logFile.logInfo("%s status： on" % key)
+        elif keyStatus == OSApiConstants.ABLE_TYPE_DISABLE:
+            iniFile.addKeyValue(section, key, "off")
+            logFile.logInfo("%s status： off" % key)
+        else:
+            iniFile.addKeyValue(section, key, "fail->%d" % keyStatus)
+            logFile.logErr("back_key status： %s" % self.dealOSErrCode(keyStatus))
 
     def dealOSErrCode(self, errCode):
         if errCode == OSApiErrorCode.ERR_SYS_TIMEOUT:

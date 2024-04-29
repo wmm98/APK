@@ -1,3 +1,14 @@
+from jnius import autoclass
+
+PythonActivity = autoclass('org.kivy.android.PythonActivity')
+Context = PythonActivity.mActivity
+packageName = Context.getApplicationContext().getPackageName()
+Api = autoclass('com.android.common.osapi.OSApi')
+
+
+# testApi = OSApi(Api(Context))
+
+
 class TelApi:
     def __init__(self, osApi):
         self.TelOSApi = osApi

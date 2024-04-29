@@ -29,10 +29,10 @@ if __name__ == '__main__':
 
     commFunc.initTestResultDirectory()
     appRunPath = commFunc.getCurrentPath()
-    iniFile = OutPutIniResult(appRunPath)
-    iniFile.createIniFile(Config.actualResultFileName)
-    logFile = OutPutTestResult(appRunPath)
-    logFile.createFile(Config.automationLog)
+    iniFile = OutPutIniResult()
+    iniFile.createIniFile(appRunPath, Config.actualResultFileName)
+    logFile = OutPutTestResult()
+    logFile.createFile(appRunPath, Config.automationLog)
 
     # # 创建存放测试结果的目录， 创建存放测试数据的文件,初始化后在sdcard/TestTeam的路径下
     logFile.logInfo("root 设备")

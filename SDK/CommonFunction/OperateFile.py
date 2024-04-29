@@ -50,23 +50,20 @@ def get_current_time():
 
 
 class OutPutTestResult:
-    def __init__(self, defaultPath):
-        self.defaultPath = defaultPath
-        self.testResultLogPath = ""
+    def __init__(self):
+        pass
 
-    def createFile(self, filename):
-        filePath = os.path.join(self.defaultPath, Config.testDirectory, filename)
-        self.testResultLogPath = filePath
-        fd = open(filePath, "w")
+    def createFile(self):
+        fd = open(Config.logFilePath, "w")
         fd.close()
 
     def logInfo(self, msg):
-        fd = open(self.testResultLogPath, "a+")
+        fd = open(Config.logFilePath, "a")
         fd.write("[INFO " + get_current_time() + "]" + msg + "\n")
         fd.close()
 
     def logErr(self, msg):
-        fd = open(self.testResultLogPath, "a")
+        fd = open(Config.logFilePath, "a")
         fd.write("[ERROR " + get_current_time() + "]" + msg + "\n")
         fd.close()
 
@@ -74,13 +71,11 @@ class OutPutTestResult:
 class OutPutIniResult:
     config = configparser.ConfigParser()
 
-    def __init__(self, defaultPath):
-        self.defaultPath = defaultPath
-        self.testResultIniPath = ""
+    def __init__(self):
+        pass
 
-    def createIniFile(self, fileName):
-        self.testResultIniPath = os.path.join(self.defaultPath, Config.testDirectory, fileName)
-        fd = open(self.testResultIniPath, "w")
+    def createIniFile(self):
+        fd = open(Config.iniFilePath, "w")
         fd.close()
 
     def setSection(self, sectionName):
@@ -88,7 +83,5 @@ class OutPutIniResult:
 
     def addKeyValue(self, sectionName, key, value):
         self.config.set(sectionName, key, value)
-        with open(self.testResultIniPath, 'w') as configfile:
+        with open(Config.iniFilePath, 'w') as configfile:
             self.config.write(configfile)
-
-
