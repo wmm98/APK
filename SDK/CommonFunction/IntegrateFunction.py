@@ -3,6 +3,7 @@ from SDK.OSApi.OSApiConstants import OSApiConstants
 from SDK.OSApi.OSApiErrorCode import OSApiErrorCode
 from SDK.CommonFunction.OperateFile import OperateFile, OutPutIniResult, OutPutTestResult
 from SDK.CommonFunction.Config import Config
+from SDK.CommonFunction.BaseInterface import BaseInterface
 from jnius import autoclass
 import os
 import time
@@ -19,7 +20,7 @@ iniFile = OutPutIniResult()
 logFile = OutPutTestResult()
 
 
-class CommFunction:
+class CommFunction(BaseInterface):
     def __init__(self):
         pass
 
@@ -95,28 +96,7 @@ class CommFunction:
     def sendCommandSuccess(self, operation):
         pass
 
-    def timeSleep(self, seconds):
-        time.sleep(seconds)
-
     def waitSetResponse(self):
         self.timeSleep(Config.waitSetRespTime)
 
-    def getExternalStorageAbsolutePath(self):
-        return Environment.getExternalStorageDirectory().getAbsolutePath()
 
-    def getCurrentPath(self):
-        return os.getcwd()
-
-    def chDirPath(self, path):
-        os.chdir(path)
-
-    def chRootPath(self):
-        os.path.expanduser('~')
-
-    def lsDirePath(self, path=None):
-        if path is None:
-            shell.SendCommand("ls")
-            if shell.result == OSApiErrorCode.OK:
-                return shell.successMsg
-            else:
-                return "Send command->\"ls\" fail, return code is %d pls check !!!" % shell.result
