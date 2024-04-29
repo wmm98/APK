@@ -16,6 +16,28 @@ class CommFunction:
     def __init__(self):
         pass
 
+    def dealOSErrCode(self, errCode):
+        if errCode == OSApiErrorCode.ERR_SYS_TIMEOUT:
+            return "%d %s" % (errCode, "超时")
+        elif errCode == OSApiErrorCode.ERR_SYS_INVALID:
+            return "%d %s" % (errCode, "参数非法")
+        elif errCode == OSApiErrorCode.ERR_SYS_NO_DEV:
+            return "%d %s" % (errCode, "设备未找到")
+        elif errCode == OSApiErrorCode.ERR_SYS_NO_INIT:
+            return "%d %s" % (errCode, "设备或资源未初始化")
+        elif errCode == OSApiErrorCode.ERR_SYS_ALREADY_INIT:
+            return "%d %s" % (errCode, "设备或资源已初始化")
+        elif errCode == OSApiErrorCode.ERR_SYS_OVER_FLOW:
+            return "%d %s" % (errCode, "缓存不足")
+        elif errCode == OSApiErrorCode.ERR_SYS_NOT_SUPPORT:
+            return "%d %s" % (errCode, "暂不支持")
+        elif errCode == OSApiErrorCode.ERR_SYS_UNEXPECT:
+            return "%d %s" % (errCode, "未知错误")
+        elif errCode == OSApiErrorCode.ERR_SYS_NO_PERMISSION:
+            return "%d %s" % (errCode, "无权限访问")
+        elif errCode == OSApiErrorCode.ERR_SYS_DATA_TRANSMIT:
+            return "%d %s" % (errCode, "通信失败")
+
     def initTestResultDirectory(self):
         # 创建存放测试结果的目录， 创建存放测试数据的文件
         # 直接在app文件夹里面记录，再复制出去外部存储里面
@@ -27,19 +49,6 @@ class CommFunction:
         if Config.screenShotDirectory not in os.listdir(self.getCurrentPath()):
             fileOperate.osCreateDirectory(Config.screenShotDirectory)
         self.chDirPath("..")
-        print(self.getCurrentPath())
-
-        # lsInfo = self.lsDirePath()
-        # if Config.actualResultFileName not in lsInfo:
-        #     with open(Config.actualResultFileName, "w+") as f:
-        #         f.close()
-        #     # fileOperate.createFile(Config.actualResultFileName)
-        # else:
-        #     fileOperate.clearFileInfo(Config.actualResultFileName)
-        # if Config.automationLog not in lsInfo:
-        #     fileOperate.createFile(Config.automationLog)
-        # else:
-        #     fileOperate.clearFileInfo(Config.automationLog)
 
     def enableSetGet(self, setFunc, getFunc):
         enableFlag = False

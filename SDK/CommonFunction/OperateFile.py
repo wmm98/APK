@@ -43,10 +43,6 @@ class OperateFile:
     def osCreateDirectory(self, DireName):
         os.mkdir(DireName)
 
-    def createFile(self, fileName):
-        fd = open(fileName, "w+")
-        fd.close()
-
 
 def get_current_time():
     dateStr = '%Y-%m-%d %H:%M:%S'
@@ -61,7 +57,7 @@ class OutPutTestResult:
     def createFile(self, filename):
         filePath = os.path.join(self.defaultPath, Config.testDirectory, filename)
         self.testResultLogPath = filePath
-        fd = open(filePath, "w+")
+        fd = open(filePath, "w")
         fd.close()
 
     def logInfo(self, msg):
@@ -70,7 +66,7 @@ class OutPutTestResult:
         fd.close()
 
     def logErr(self, msg):
-        fd = open(self.testResultLogPath, "a+")
+        fd = open(self.testResultLogPath, "a")
         fd.write("[ERROR " + get_current_time() + "]" + msg + "\n")
         fd.close()
 
@@ -84,7 +80,7 @@ class OutPutIniResult:
 
     def createIniFile(self, fileName):
         self.testResultIniPath = os.path.join(self.defaultPath, Config.testDirectory, fileName)
-        fd = open(self.testResultIniPath, "w+")
+        fd = open(self.testResultIniPath, "w")
         fd.close()
 
     def setSection(self, sectionName):
@@ -92,6 +88,7 @@ class OutPutIniResult:
 
     def addKeyValue(self, sectionName, key, value):
         self.config.set(sectionName, key, value)
-        with open(self.testResultIniPath, 'a+') as configfile:
+        with open(self.testResultIniPath, 'w') as configfile:
             self.config.write(configfile)
+
 
