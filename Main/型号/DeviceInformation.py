@@ -41,10 +41,10 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****外部型号测试开始********")
+    logFile.logInfo("*****音量测试开始********")
 
     try:
-        iniFile.setSection("DeviceInformation")
+        iniFile.setSection("Volume")
         logFile.logInfo("检查设置型号")
         model = testApi.getExternalModelConfiguration()
 
