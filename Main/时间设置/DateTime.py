@@ -41,22 +41,47 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****功能键测试开始********")
+    logFile.logInfo("*****时间设置测试开始********")
 
     try:
-        section = "FunctionKey"
+        section = "DateTime"
+        option1 = "autotimezone"
         iniFile.setSection(section)
-        logFile.logInfo("检查功能键开关")
-        functionKeyEnable = testApi.getKeyEnable(OSApiConstants.KEY_TYPE_FUNCTION)
-        if functionKeyEnable < OSApiErrorCode.OK:
-            iniFile.addKeyValue(section, "Key", "fail->%d" % functionKeyEnable)
-            logFile.logErr("Key： %s" % commFunc.dealOSErrCode(functionKeyEnable))
-        elif functionKeyEnable == OSApiConstants.ABLE_TYPE_ENABLE:
-            iniFile.addKeyValue(section, "Key", "on")
-            logFile.logInfo("Key ： %s" % "on")
-        elif functionKeyEnable == OSApiConstants.ABLE_TYPE_DISABLE:
-            iniFile.addKeyValue(section, "Key", "off")
-            logFile.logInfo("Key ： %s" % "off")
+        logFile.logInfo("自动设置时区测试")
+        autoTimeZoneEnable = testApi.getAutoTimeZoneEnable()
+
+        if autoTimeZoneEnable < OSApiErrorCode.OK:
+            iniFile.addKeyValue(section, option1, "fail->%d" % autoTimeZoneEnable)
+            logFile.logErr("%s： %s" % (option1, commFunc.dealOSErrCode(autoTimeZoneEnable)))
+            # 获取当前的时区
+        elif autoTimeZoneEnable == OSApiConstants.ABLE_TYPE_ENABLE:
+            iniFile.addKeyValue(section, option1, "on")
+            logFile.logInfo("%s ： %s" % (option1, "on"))
+        elif autoTimeZoneEnable == OSApiConstants.ABLE_TYPE_DISABLE:
+            iniFile.addKeyValue(section, option1, "off")
+            logFile.logInfo("%s ： %s" % (option1, "off"))
+            currentTimeZone = testApi.getTimeZoneConfiguration()
+            iniFile.addKeyValue(section, "timezone", currentTimeZone)
+
+        option2 = "autosync"
+        logFile.logInfo("自动设置时间测试")
+        autTimeEnable = testApi.getAutoTimeEnable()
+
+        if autTimeEnable < OSApiErrorCode.OK:
+            iniFile.addKeyValue(section, option2, "fail->%d" % autTimeEnable)
+            logFile.logErr("%s： %s" % (option2, commFunc.dealOSErrCode(autTimeEnable)))
+            # 获取当前的时区
+        elif autTimeEnable == OSApiConstants.ABLE_TYPE_ENABLE:
+            iniFile.addKeyValue(section, option2, "on")
+            logFile.logInfo("%s ： %s" % (option2, "on"))
+        elif autTimeEnable == OSApiConstants.ABLE_TYPE_DISABLE:
+            iniFile.addKeyValue(section, option2, "off")
+            logFile.logInfo("%s ： %s" % (option2, "off"))
+            currentTimeFormat = commFunc.getTimeFormat()
+            if currentTimeFormat == 12:
+                iniFile.addKeyValue(section, "format", "0")
+            else:
+                iniFile.addKeyValue(section, "format", "1")
 
     except Exception as e:
         logFile.logErr(str(e))

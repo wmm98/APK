@@ -3,7 +3,7 @@ from SDK.OSApi.OSApiConstants import OSApiConstants
 from SDK.OSApi.OSApiErrorCode import OSApiErrorCode
 from SDK.CommonFunction.OperateFile import OperateFile, OutPutIniResult, OutPutTestResult
 from SDK.CommonFunction.Config import Config
-from SDK.CommonFunction.BaseInterface import BaseInterface
+from SDK.CommonFunction.ADBInterface import ADBInterface
 from jnius import autoclass
 import os
 import time
@@ -20,7 +20,7 @@ iniFile = OutPutIniResult()
 logFile = OutPutTestResult()
 
 
-class CommFunction(BaseInterface):
+class CommFunction(ADBInterface):
     def __init__(self):
         pass
 
