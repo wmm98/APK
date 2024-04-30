@@ -41,15 +41,27 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****外部型号测试开始********")
+    logFile.logInfo("*****电源键测试开始********")
 
     try:
-        iniFile.setSection("DeviceInformation")
-        logFile.logInfo("检查设置型号")
-        model = testApi.getExternalModelConfiguration()
+        iniFile.setSection("Power")
+        logFile.logInfo("检查锁屏功能开关")
+        screenLockEnable = testApi.getLockScreenEnable()
+        if screenLockEnable < OSApiErrorCode.OK:
+            iniFile.addKeyValue("Power", "screen_lock", "fail->%d" % screenLockEnable)
+            logFile.logErr("screen_lock： %s" % commFunc.dealOSErrCode(screenLockEnable))
+        else:
+            iniFile.addKeyValue("Power", "screen_lock", str(screenLockEnable))
+            logFile.logInfo("screen_lock ： %d" % screenLockEnable)
 
-        iniFile.addKeyValue("DeviceInformation", "model_number", model)
-        logFile.logInfo("model_number ： %s" % model)
+        logFile.logInfo("检查灭屏时间")
+        ScreenOffTimeout = testApi.getScreenOffTimeoutConfiguration()
+        if ScreenOffTimeout < OSApiErrorCode.OK:
+            iniFile.addKeyValue("Power", "sleep_time", "fail->%d" % ScreenOffTimeout)
+            logFile.logErr("screen_lock： %s" % commFunc.dealOSErrCode(ScreenOffTimeout))
+        else:
+            iniFile.addKeyValue("Power", "sleep_time", str(ScreenOffTimeout))
+            logFile.logInfo("screen_lock ： %d" % ScreenOffTimeout)
 
     except Exception as e:
         logFile.logErr(str(e))

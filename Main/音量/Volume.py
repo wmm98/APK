@@ -41,15 +41,23 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****外部型号测试开始********")
+    logFile.logInfo("*****音量测试开始********")
 
     try:
-        iniFile.setSection("DeviceInformation")
-        logFile.logInfo("检查设置型号")
-        model = testApi.getExternalModelConfiguration()
+        iniFile.setSection("Volume")
+        logFile.logInfo("检查设备音量")
+        systemVolume = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_SYSTEM)
+        musicVolume = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_MUSIC)
+        alarmVolume = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_ALARM)
 
-        iniFile.addKeyValue("DeviceInformation", "model_number", model)
-        logFile.logInfo("model_number ： %s" % model)
+        iniFile.addKeyValue("Volume", "stream_system", str(systemVolume))
+        logFile.logInfo("stream_system ： %d" % systemVolume)
+
+        iniFile.addKeyValue("Volume", "stream_music", str(musicVolume))
+        logFile.logInfo("stream_music ： %d" % musicVolume)
+
+        iniFile.addKeyValue("Volume", "stream_alarm", str(alarmVolume))
+        logFile.logInfo("stream_alarm ： %d" % alarmVolume)
 
     except Exception as e:
         logFile.logErr(str(e))

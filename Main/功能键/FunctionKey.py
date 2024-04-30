@@ -33,7 +33,7 @@ if __name__ == '__main__':
     logFile = OutPutTestResult()
     logFile.createFile()
 
-    # # 创建存放测试结果的目录， 创建存放测试数据的文件,初始化后在sdcard/TestTeam的路径下
+    # 创建存放测试结果的目录， 创建存放测试数据的文件,初始化后在sdcard/TestTeam的路径下
     logFile.logInfo("root 设备")
     if commFunc.enableSetGet(testApi.setAppRootEnable(OSApiConstants.ABLE_TYPE_ENABLE), testApi.getAppRootEnable()):
         logFile.logInfo("root 成功")
@@ -41,15 +41,23 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****外部型号测试开始********")
+    logFile.logInfo("*****功能键测试开始********")
 
     try:
-        iniFile.setSection("DeviceInformation")
-        logFile.logInfo("检查设置型号")
-        model = testApi.getExternalModelConfiguration()
+        section = "FunctionKey"
+        iniFile.setSection(section)
+        logFile.logInfo("检查锁屏功能键开关")
+        functionKeyEnable = testApi.getKeyEnable(OSApiConstants.KEY_TYPE_FUNCTION)
+        if functionKeyEnable < OSApiErrorCode.OK:
+            iniFile.addKeyValue(section, "enable", "fail->%d" % functionKeyEnable)
+            logFile.logErr("screen_lock： %s" % commFunc.dealOSErrCode(functionKeyEnable))
+        elif functionKeyEnable == OSApiConstants.ABLE_TYPE_ENABLE:
+            iniFile.addKeyValue(section, "enable", "on")
+            logFile.logInfo("enable ： %d" % functionKeyEnable)
 
-        iniFile.addKeyValue("DeviceInformation", "model_number", model)
-        logFile.logInfo("model_number ： %s" % model)
+        elif functionKeyEnable == OSApiConstants.ABLE_TYPE_DISABLE:
+            iniFile.addKeyValue(section, "enable", "off")
+            logFile.logInfo("enable ： %d" % functionKeyEnable)
 
     except Exception as e:
         logFile.logErr(str(e))

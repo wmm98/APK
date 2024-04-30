@@ -41,15 +41,27 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****外部型号测试开始********")
+    logFile.logInfo("*****显示测试开始********")
 
     try:
-        iniFile.setSection("DeviceInformation")
-        logFile.logInfo("检查设置型号")
-        model = testApi.getExternalModelConfiguration()
+        iniFile.setSection("Display")
+        logFile.logInfo("检查当前亮度")
+        brightness = testApi.getBrightness()
+        if brightness < OSApiErrorCode.OK:
+            iniFile.addKeyValue("Display", "brightness", "fail->%d" % brightness)
+            logFile.logErr("brightness： %s" % commFunc.dealOSErrCode(brightness))
+        else:
+            iniFile.addKeyValue("Display", "brightness", str(brightness))
+            logFile.logInfo("brightness ： %d" % brightness)
 
-        iniFile.addKeyValue("DeviceInformation", "model_number", model)
-        logFile.logInfo("model_number ： %s" % model)
+        logFile.logInfo("检查当前字体大小")
+        size = testApi.getFontSize()
+        if size < OSApiErrorCode.OK:
+            iniFile.addKeyValue("Display", "size", "fail->%d" % size)
+            logFile.logErr("size： %s" % commFunc.dealOSErrCode(size))
+        else:
+            iniFile.addKeyValue("Display", "size", str(size))
+            logFile.logInfo("size ： %d" % size)
 
     except Exception as e:
         logFile.logErr(str(e))
