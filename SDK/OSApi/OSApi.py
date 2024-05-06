@@ -230,7 +230,7 @@ class OSApi(TelApi):
         """
         :return:launcher package name
         """
-        return self.getSystemControl().getLauncher()
+        return self.getApplicationControl().getLauncher()
 
     def installApk(self, apkFilePath):
         return self.getApplicationControl().installApk(apkFilePath)
