@@ -349,134 +349,134 @@ class OSApi(TelApi):
 
     def getDeviceModel(self):
         # 获取设备的型号信息
-        return self.getDisplayControl().getDeviceModel()
+        return self.getDeviceInfoControl().getDeviceModel()
 
     def getProductModel(self):
         # 获取产品型号
-        return self.getDisplayControl().getProductModel()
+        return self.getDeviceInfoControl().getProductModel()
 
     def getSerialNumber(self):
-        return self.getDisplayControl().getSerialNumber()
+        return self.getDeviceInfoControl().getSerialNumber()
 
     def getBuildNumber(self):
-        return self.getDisplayControl().getBuildNumber()
+        return self.getDeviceInfoControl().getBuildNumber()
 
     def getBaseband(self):
-        return self.getDisplayControl().getBaseband()
+        return self.getDeviceInfoControl().getBaseband()
 
     def getIMEI(self, slot):
         # : 卡道（eg：0，1）
-        return self.getDisplayControl().getIMEI(slot)
+        return self.getDeviceInfoControl().getIMEI(slot)
 
     def getMEID(self, slot):
         # : 卡道（eg：0，1）
-        return self.getDisplayControl().getMEID(slot)
+        return self.getDeviceInfoControl().getMEID(slot)
 
     def getBootloader(self):
         # 获取设备SP的bootloader信息
-        return self.getDisplayControl().getBootloader()
+        return self.getDeviceInfoControl().getBootloader()
 
     def getSecurityOS(self):
         # 获取设备SP的OS信息
-        return self.getDisplayControl().getSecurityOS()
+        return self.getDeviceInfoControl().getSecurityOS()
 
     def getBootWizard(self):
         # 获取开机向导版本
-        return self.getDisplayControl().getBootWizard()
+        return self.getDeviceInfoControl().getBootWizard()
 
     def getCurrentNetWorkType(self):
         """
 
         :return: {eg:"unknown","ethernet","wifi","2G","3G","4G"]
         """
-        return self.getDisplayControl().getCurrentNetWorkType()
+        return self.getDeviceInfoControl().getCurrentNetWorkType()
 
     def getSimSignalStrength(self, slot):
         # 获取信号强度等级（只包含SIM卡）
-        return self.getDisplayControl().getSimSignalStrength(slot)
+        return self.getDeviceInfoControl().getSimSignalStrength(slot)
 
     def getSimRSRP(self, slot):
         # 获取信号接收功率（只包含SIM卡）
-        return self.getDisplayControl().getSimRSRP(slot)
+        return self.getDeviceInfoControl().getSimRSRP(slot)
 
     def getSimRSSINR(self, slot):
         # 获取信号与干扰噪声比（只包含SIM卡）
-        return self.getDisplayControl().getSimRSSINR(slot)
+        return self.getDeviceInfoControl().getSimRSSINR(slot)
 
     def getSimPCI(self):
         # getSimPCI
-        return self.getDisplayControl().getSimPCI()
+        return self.getDeviceInfoControl().getSimPCI()
 
     def getSimSignalCoverageLevel(self):
         # 获取无线信号覆盖等级（只包含SIM卡）
-        return self.getDisplayControl().getSimSignalCoverageLevel()
+        return self.getDeviceInfoControl().getSimSignalCoverageLevel()
 
     def getSimCellLocationInfo(self):
         # 获取小区位置信息（只包含SIM卡）
-        return self.getDisplayControl().getSimCellLocationInfo()
+        return self.getDeviceInfoControl().getSimCellLocationInfo()
 
     def getEthernetMac(self):
-        return self.getDisplayControl().getEthernetMac()
+        return self.getDeviceInfoControl().getEthernetMac()
 
     def getWifiMac(self):
-        return self.getDisplayControl().getWifiMac()
+        return self.getDeviceInfoControl().getWifiMac()
 
     def getBluetoothMac(self):
-        return self.getDisplayControl().getBluetoothMac()
+        return self.getDeviceInfoControl().getBluetoothMac()
 
     def getBatteryStatus(self):
         # 获取电池状态
-        return self.getDisplayControl().getBatteryStatus()
+        return self.getDeviceInfoControl().getBatteryStatus()
 
     def getBatteryLevel(self):
         # 获取电池当前电量
-        return self.getDisplayControl().getBatteryLevel()
+        return self.getDeviceInfoControl().getBatteryLevel()
 
     def getMemorySize(self):
         """
 
         :return: int
         """
-        return self.getDisplayControl().getMemorySize()
+        return self.getDeviceInfoControl().getMemorySize()
 
     def getStorageSize(self):
         """
 
         :return: int
         """
-        return self.getDisplayControl().getStorageSize()
+        return self.getDeviceInfoControl().getStorageSize()
 
     def getMemoryUsage(self):
         """
 
         :return: float
         """
-        return self.getDisplayControl().getMemoryUsage()
+        return self.getDeviceInfoControl().getMemoryUsage()
 
     def getStorageUsage(self):
         # 获取存储使用率
-        return self.getDisplayControl().getStorageUsage()
+        return self.getDeviceInfoControl().getStorageUsage()
 
     def getTotalCpuUsage(self):
         # 获取总CPU使用率
-        return self.getDisplayControl().getTotalCpuUsage()
+        return self.getDeviceInfoControl().getTotalCpuUsage()
 
     def getCpuTemperature(self):
         """
 
         :return: float
         """
-        return self.getDisplayControl().getCpuTemperature()
+        return self.getDeviceInfoControl().getCpuTemperature()
 
     def getUsbDevices(self):
         """
 
         :return: # 获取接入的USB设备
         """
-        return self.getDisplayControl().getUsbDevices()
+        return self.getDeviceInfoControl().getUsbDevices()
 
     def getScreenInfo(self, screenId):
-        return self.getDisplayControl().getScreenInfo(screenId)
+        return self.getDeviceInfoControl().getScreenInfo(screenId)
 
     def setIpAddressBlackList(self, blackList):
         # 重启后黑名设置的失效
