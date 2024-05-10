@@ -6,6 +6,9 @@ class Config:
     screenShotDirectory = "TestScreenShot"
     actualResultFileName = "TestResult.ini"
     automationLog = "AutomationTestLog.txt"
+    expectResult = "ExpectResult"
+
+
     # 检查次数
     checkTimes = 3
     # 等待set 响应时间

@@ -11,3 +11,4 @@ class ADBInterface(BaseInterface):
     def getTimeFormat(self):
         shell.SendCommand("settings get system time_12_24")
         return shell.successMsg
+

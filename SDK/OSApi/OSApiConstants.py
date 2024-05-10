@@ -11,6 +11,7 @@ class OSApiConstants:
     DataTrafficType = autoclass('com.android.common.osapi.common.OsApiConstants$DataTrafficType')
     AppOpPermissions = autoclass('com.android.common.osapi.common.OsApiConstants$AppOpPermissions')
 
+
     TelAbleType = AbleType()
     TelKeyType = KeyType()
     TelSettingsType = SettingsType()
@@ -68,7 +69,6 @@ class OSApiConstants:
     OP_SYSTEM_ALERT_WINDOW = TelAppOpPermissions.OP_SYSTEM_ALERT_WINDOW
     OP_WRITE_SETTINGS = TelAppOpPermissions.OP_WRITE_SETTINGS
     OP_REQUEST_INSTALL_PACKAGES = TelAppOpPermissions.OP_REQUEST_INSTALL_PACKAGES
-
 
 if __name__ == '__main__':
     print(OSApiConstants().TIMEOUT_2_MINUTES)

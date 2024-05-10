@@ -1,6 +1,10 @@
 import os
 import time
 from jnius import autoclass
+from SDK.CommonFunction.Config import Config
+from SDK.OSApi.OSAPiShell import OSAPiShell
+
+shell = OSAPiShell()
 
 
 Environment = autoclass('android.os.Environment')
@@ -24,3 +28,5 @@ class BaseInterface:
 
     def getExternalStorageAbsolutePath(self):
         return Environment.getExternalStorageDirectory().getAbsolutePath()
+
+

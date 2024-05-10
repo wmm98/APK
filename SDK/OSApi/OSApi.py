@@ -236,7 +236,8 @@ class OSApi(TelApi):
         return self.getApplicationControl().installApk(apkFilePath)
 
     def unInstallApp(self, packageName):
-        return self.getApplicationControl().unInstallApp(packageName)
+        result = self.getApplicationControl().unInstallApp(packageName)
+        return {"mResult": result.mResult, "mResultMessage": result.mResultMessage}
 
     def setAppInstallBlackList(self, packageName):
         return self.getSystemControl().setAppInstallBlackList(packageName)

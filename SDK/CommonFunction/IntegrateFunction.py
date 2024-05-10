@@ -24,6 +24,25 @@ class CommFunction(ADBInterface):
     def __init__(self):
         pass
 
+    def getConfigDirePath(self):
+        expectResultPath = os.path.join(self.getExternalStorageAbsolutePath(), Config.expectResult)
+        shell.SendCommand("ls %s" % expectResultPath)
+        configDireName = shell.successMsg.strip()
+        configDirePath = os.path.join(expectResultPath, configDireName)
+        return configDirePath
+
+    def getConfigDireName(self):
+        return os.path.basename(self.getConfigDirePath())
+
+    def getIniFileName(self):
+        return os.path.basename(self.getIniFilePath())
+
+    def getIniFilePath(self):
+        shell.SendCommand("ls %s | grep ini" % self.getConfigDirePath())
+        iniFileName = shell.successMsg.strip()
+        iniPath = os.path.join(self.getConfigDirePath(), iniFileName)
+        return iniPath
+
     def getKeyStatus(self, section, key):
         logFile.logInfo("%s状态" % key)
         keyStatus = testApi.getKeyEnable(OSApiConstants.KEY_TYPE_BACK)
@@ -66,6 +85,8 @@ class CommFunction(ADBInterface):
         # # self.chDirPath(ExternalStorageDire))
         if Config.testDirectory not in os.listdir(self.getCurrentPath()):
             fileOperate.osCreateDirectory(Config.testDirectory)
+        # if Config.expectResult not in os.listdir(self.getCurrentPath()):
+        #     fileOperate.osCreateDirectory(Config.expectResult)
         self.chDirPath(Config.testDirectory)
         if Config.screenShotDirectory not in os.listdir(self.getCurrentPath()):
             fileOperate.osCreateDirectory(Config.screenShotDirectory)

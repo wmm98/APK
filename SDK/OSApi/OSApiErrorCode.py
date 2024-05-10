@@ -17,6 +17,9 @@ class OSApiErrorCode:
     ERR_SYS_NO_PERMISSION = ApiErrorCode.ERR_SYS_NO_PERMISSION
     ERR_SYS_DATA_TRANSMIT = ApiErrorCode.ERR_SYS_DATA_TRANSMIT
 
+    OsPackageInstallerResult = autoclass("com.android.common.osapi.entity.OsPackageInstallerResult")
+    STATUS_SUCCESS = OsPackageInstallerResult.STATUS_SUCCESS
+
     # /** 操作成功 */
 # public final static int OK = 0;
 #

@@ -12,7 +12,6 @@ import sys
 from kivy.app import App
 from jnius import autoclass
 
-
 if __name__ == '__main__':
 
     Environment = autoclass('android.os.Environment')
