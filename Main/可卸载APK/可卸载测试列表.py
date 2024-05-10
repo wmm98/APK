@@ -39,17 +39,18 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****防卸载测试开始********")
+    logFile.logInfo("*****可卸载APK测试开始********")
     try:
-        externalStoragePath = commFunc.getExternalStorageAbsolutePath()
-        expectResult = Config.expectResult
-        logFile.logInfo("应用防卸载测试")
-
         # com.xzr.La.hotter com.bjw.ComAssistant
-        # 获取防卸载的包
+        # 获可防卸载的包
+        shell.SendCommand("cat %s | grep uninstall_enable" % (commFunc.getIniFilePath()))
+        expPackagesUninstallEnable = shell.successMsg
+        logFile.logInfo("预期的可卸载列表为： %s" % expPackagesUninstallEnable)
+        # 防卸载列表
         shell.SendCommand("cat %s | grep uninstall_disable" % (commFunc.getIniFilePath()))
-        expPackages = shell.successMsg
-        logFile.logInfo("预期的防卸载列表为：%s" % expPackages)
+        expPackagesUninstallDisable = shell.successMsg
+        logFile.logInfo("预期的防卸载列表为：%s" % expPackagesUninstallDisable)
+
         # 获取防止卸载package列表
         UninstallablePackages = testApi.getAppUninstallable().strip()
 
@@ -58,20 +59,24 @@ if __name__ == '__main__':
         iniFile.setSection(section)
         # logFile.logInfo("%s ： %s" % (option, launcherName))
 
-        if expPackages:
+        if expPackagesUninstallEnable:
             logFile.logInfo("系统显示的防卸载列表为：%s" % UninstallablePackages)
-            expPackagesList = expPackages.split("=")[1].split(";")[:-1]
-            for package in expPackagesList:
-                uninstallResult1 = testApi.unInstallApp(package)
-                if uninstallResult1["mResult"] == OSApiErrorCode.STATUS_SUCCESS:
-                    logFile.logErr("应用%s可卸载， 请检查" % package)
-                    # logFile.logErr("%s卸载失败，返回的结果码为%s, 补充信息为%s" % (package, str(uninstallResult1["mResult"]), uninstallResult1["mResultMessageamelt"]))
-                    iniFile.addKeyValue(section, package, "fail")
+            expPackagesUninstallEnableList = expPackagesUninstallEnable.split("=")[1].split(";")[:-1]
+            for package in expPackagesUninstallEnableList:
+                if package not in expPackagesUninstallDisable:
+                    # 去卸载apk
+                    result = testApi.unInstallApp(package)
+                    if testApi.unInstallApp(package) == OSApiErrorCode.STATUS_SUCCESS:
+                        logFile.logInfo("应用%s可卸载， 测试成功并且不在防卸载列表里" % package)
+                        iniFile.addKeyValue(section, package, "pass")
+                    else:
+                        logFile.logErr("应用%s不可卸载， 测试失败, 返回码%s， 补充信息为： %s" % (package, str(result["mResult"]), result["mResultMessage"]))
+                        iniFile.addKeyValue(section, package, "fail")
                 else:
-                    logFile.logInfo("应用%s不可卸载， 测试成功" % package)
-                    iniFile.addKeyValue(section, package, "pass")
+                    logFile.logErr("应用%s在防卸载列表里面， 请检查！！！" % package)
+                    iniFile.addKeyValue(section, package, "fail")
         else:
-            logFile.logErr("没有设置防卸载列表， 请检查！！！")
+            logFile.logErr("没有设置可卸载应用， 请检查！！！")
     except Exception as e:
         logFile.logErr(str(e))
 
