@@ -48,7 +48,7 @@ if __name__ == '__main__':
         # 获取预期的so库
         shell.SendCommand("cat %s | grep %s" % (commFunc.getIniFilePath(), option))
         soName = os.path.basename(shell.successMsg.split("=")[1])
-        logFile.logInfo("Emv_Res: so库名字为：%s" %soName)
+        logFile.logInfo("Emv_Res: so库名字为：%s" % soName)
         shell.SendCommand("ls /system/lib |grep %s" % soName)
         if soName in shell.successMsg:
             iniFile.addKeyValue(section, "emv_res", "pass")
