@@ -4,6 +4,7 @@ import time
 import configparser
 from SDK.CommonFunction.Config import Config
 
+
 shell = OSAPiShell()
 
 

@@ -77,11 +77,12 @@ if __name__ == '__main__':
         elif autTimeEnable == OSApiConstants.ABLE_TYPE_DISABLE:
             iniFile.addKeyValue(section, option2, "off")
             logFile.logInfo("%s ： %s" % (option2, "off"))
-            currentTimeFormat = commFunc.getTimeFormat()
-            if currentTimeFormat == 12:
-                iniFile.addKeyValue(section, "format", "0")
-            else:
-                iniFile.addKeyValue(section, "format", "1")
+
+        currentTimeFormat = commFunc.getTimeFormat()
+        if currentTimeFormat == 12:
+            iniFile.addKeyValue(section, "format", "0")
+        else:
+            iniFile.addKeyValue(section, "format", "1")
 
     except Exception as e:
         logFile.logErr(str(e))

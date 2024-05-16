@@ -45,11 +45,8 @@ if __name__ == '__main__':
         section = "ConfigVersion"
         option = "customer"
         iniFile.setSection(section)
-        # 获取预期的so库
-        shell.SendCommand("cat %s | grep %s" % (commFunc.getIniFilePath(), option))
-        customName = shell.successMsg.split("=")[1]
-        logFile.logInfo("预为定制客户为：%s" % customName)
-        shell.SendCommand("getprop persist.sys.provision |grep %s" % customName)
+        # 获取测试结果
+        shell.SendCommand("getprop persist.sys.provision")
         if shell.successMsg:
             iniFile.addKeyValue(section, option, shell.successMsg)
             logFile.logInfo("系统显示的定制客户名为：%s" % shell.successMsg)

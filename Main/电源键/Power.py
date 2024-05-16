@@ -50,9 +50,12 @@ if __name__ == '__main__':
         if screenLockEnable < OSApiErrorCode.OK:
             iniFile.addKeyValue("Power", "screen_lock", "fail->%d" % screenLockEnable)
             logFile.logErr("screen_lock： %s" % commFunc.dealOSErrCode(screenLockEnable))
-        else:
-            iniFile.addKeyValue("Power", "screen_lock", str(screenLockEnable))
-            logFile.logInfo("screen_lock ： %d" % screenLockEnable)
+        elif screenLockEnable == OSApiConstants.ABLE_TYPE_ENABLE:
+            iniFile.addKeyValue("Power", "screen_lock", "on")
+            logFile.logInfo("screen_lock ： %s" % "on")
+        elif screenLockEnable == OSApiConstants.ABLE_TYPE_DISABLE:
+            iniFile.addKeyValue("Power", "screen_lock", "off")
+            logFile.logInfo("screen_lock ： %s" % "on")
 
         logFile.logInfo("检查灭屏时间")
         ScreenOffTimeout = testApi.getScreenOffTimeoutConfiguration()

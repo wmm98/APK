@@ -40,22 +40,22 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****EmvRes库测试开始********")
+    logFile.logInfo("*****定制客户测试开始********")
     try:
-        section = "EmvRes"
-        option = "emv_res"
+        section = "ConfigVersion"
+        option = "customer"
         iniFile.setSection(section)
         # 获取预期的so库
         shell.SendCommand("cat %s | grep %s" % (commFunc.getIniFilePath(), option))
-        soName = os.path.basename(shell.successMsg.split("=")[1])
-        logFile.logInfo("Emv_Res: so库名字为：%s" %soName)
-        shell.SendCommand("ls /system/lib |grep %s" % soName)
-        if soName in shell.successMsg:
-            iniFile.addKeyValue(section, "emv_res", "pass")
-            logFile.logInfo("系统显示emv_res库存在/system/lib： %s" % soName)
+        customName = shell.successMsg.split("=")[1]
+        logFile.logInfo("预为定制客户为：%s" % customName)
+        shell.SendCommand("getprop persist.sys.provision |grep %s" % customName)
+        if shell.successMsg:
+            iniFile.addKeyValue(section, option, shell.successMsg)
+            logFile.logInfo("系统显示的定制客户名为：%s" % shell.successMsg)
         else:
-            iniFile.addKeyValue(section, "emv_res", "fail")
-            logFile.logErr("系统显示emv_res库不存存在/system/lib： %s" % soName)
+            iniFile.addKeyValue(section, option, "")
+            logFile.logErr("系统无定制客户名字， 请检查")
 
     except Exception as e:
         logFile.logErr(str(e))

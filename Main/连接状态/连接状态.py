@@ -87,13 +87,13 @@ if __name__ == '__main__':
         logFile.logInfo("检查GPS接状态")
         locationStatus = testApi.getLocationEnable()
         if locationStatus == OSApiConstants.ABLE_TYPE_ENABLE:
-            iniFile.addKeyValue("Connection", "gps", "on")
+            iniFile.addKeyValue("Connection", "location", "on")
             logFile.logInfo("gps status： on")
         elif locationStatus == OSApiConstants.ABLE_TYPE_DISABLE:
-            iniFile.addKeyValue("Connection", "gps", "off")
+            iniFile.addKeyValue("Connection", "location", "off")
             logFile.logInfo("gps status： off")
         else:
-            iniFile.addKeyValue("Connection", "bt", "fail->%d" % locationStatus)
+            iniFile.addKeyValue("Connection", "location", "fail->%d" % locationStatus)
             logFile.logErr("gps status： %s" % commFunc.dealOSErrCode(locationStatus))
     except Exception as e:
         logFile.logErr(str(e))

@@ -44,11 +44,24 @@ if __name__ == '__main__':
     logFile.logInfo("*****触摸键状态测试开始********")
 
     try:
-        iniFile.setSection("TouchKey")
-        commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_BACK)
-        commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_HOME)
-        commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_RECENT)
-        commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_MENU)
+        section = "TouchKey"
+        iniFile.setSection(section)
+        options = ["back_key", "home_key", "recent_key", "menu_key"]
+        for option in options:
+            keyStatus = testApi.getKeyEnable(OSApiConstants.KEY_TYPE_BACK)
+            if keyStatus == OSApiConstants.ABLE_TYPE_ENABLE:
+                iniFile.addKeyValue(section, option, "on")
+                logFile.logInfo("%s status： on" % option)
+            elif keyStatus == OSApiConstants.ABLE_TYPE_DISABLE:
+                iniFile.addKeyValue(section, option, "off")
+                logFile.logInfo("%s status： off" % option)
+            else:
+                iniFile.addKeyValue(section, option, "fail->%d" % keyStatus)
+                logFile.logErr("back_key status： %s" % commFunc.dealOSErrCode(keyStatus))
+        # commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_BACK)
+        # commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_HOME)
+        # commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_RECENT)
+        # commFunc.getKeyStatus("TouchKey", OSApiConstants.KEY_TYPE_MENU)
     except Exception as e:
         logFile.logErr(str(e))
 

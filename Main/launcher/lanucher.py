@@ -49,7 +49,6 @@ if __name__ == '__main__':
         iniFile.setSection(section)
         logFile.logInfo("launcher测试")
         launcherName = str(testApi.getLauncher())
-        print("launcherName", launcherName)
         iniFile.addKeyValue(section, option, launcherName)
         logFile.logInfo("%s ： %s" % (option, launcherName))
     except Exception as e:
