@@ -55,13 +55,12 @@ if __name__ == '__main__':
         elif functionKeyEnable == OSApiConstants.ABLE_TYPE_ENABLE:
             iniFile.addKeyValue(section, option, "on")
             logFile.logInfo("Key ： %s" % "on")
+            functionKeyFor = testApi.getSettings(OSApiConstants.SETTINGS_TYPE_SYSTEM, "key_custom_button_press_action")
+            iniFile.addKeyValue(section, "function", functionKeyFor)
         elif functionKeyEnable == OSApiConstants.ABLE_TYPE_DISABLE:
             iniFile.addKeyValue(section, option, "off")
             logFile.logInfo("Key ： %s" % "off")
 
-        logFile.logInfo("检查当前功能键的调起的应用")
-        functionKeyFor = testApi.getSettings(OSApiConstants.SETTINGS_TYPE_SYSTEM, "key_custom_button_press_action")
-        iniFile.addKeyValue(section, "function", functionKeyFor)
     except Exception as e:
         logFile.logErr(str(e))
 
