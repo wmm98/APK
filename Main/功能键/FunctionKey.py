@@ -45,19 +45,23 @@ if __name__ == '__main__':
 
     try:
         section = "FunctionKey"
+        option = "enable"
         iniFile.setSection(section)
         logFile.logInfo("检查功能键开关")
         functionKeyEnable = testApi.getKeyEnable(OSApiConstants.KEY_TYPE_FUNCTION)
         if functionKeyEnable < OSApiErrorCode.OK:
-            iniFile.addKeyValue(section, "Key", "fail->%d" % functionKeyEnable)
+            iniFile.addKeyValue(section, option, "fail->%d" % functionKeyEnable)
             logFile.logErr("Key： %s" % commFunc.dealOSErrCode(functionKeyEnable))
         elif functionKeyEnable == OSApiConstants.ABLE_TYPE_ENABLE:
-            iniFile.addKeyValue(section, "Key", "on")
+            iniFile.addKeyValue(section, option, "on")
             logFile.logInfo("Key ： %s" % "on")
         elif functionKeyEnable == OSApiConstants.ABLE_TYPE_DISABLE:
-            iniFile.addKeyValue(section, "Key", "off")
+            iniFile.addKeyValue(section, option, "off")
             logFile.logInfo("Key ： %s" % "off")
 
+        logFile.logInfo("检查当前功能键的调起的应用")
+        functionKeyFor = testApi.getSettings(OSApiConstants.SETTINGS_TYPE_SYSTEM, "key_custom_button_press_action")
+        iniFile.addKeyValue(section, "function", functionKeyFor)
     except Exception as e:
         logFile.logErr(str(e))
 
