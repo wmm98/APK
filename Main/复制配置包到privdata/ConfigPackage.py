@@ -11,11 +11,12 @@ from kivy.app import App
 import sys
 from kivy.app import App
 from jnius import autoclass
-# from android.permissions import request_permissions, Permission
 import os
 
+
 if __name__ == '__main__':
-    # request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+
+    Environment = autoclass('android.os.Environment')
     PythonActivity = autoclass('org.kivy.android.PythonActivity')
     Context = PythonActivity.mActivity
     packageName = Context.getApplicationContext().getPackageName()
@@ -24,8 +25,7 @@ if __name__ == '__main__':
     fileOperate = OperateFile()
     commFunc = CommFunction()
     shell = OSAPiShell()
-    # 初始化测试结果文件相关
-
+    # 初始化相关文件
     commFunc.initTestResultDirectory()
     appRunPath = commFunc.getCurrentPath()
     iniFile = OutPutIniResult()
@@ -33,38 +33,43 @@ if __name__ == '__main__':
     logFile = OutPutTestResult()
     logFile.createFile()
 
-    # # 创建存放测试结果的目录， 创建存放测试数据的文件,初始化后在sdcard/TestTeam的路径下
+    # 创建存放测试结果的目录， 创建存放测试数据的文件,初始化后在sdcard/TestTeam的路径下
     logFile.logInfo("root 设备")
     if commFunc.enableSetGet(testApi.setAppRootEnable(OSApiConstants.ABLE_TYPE_ENABLE), testApi.getAppRootEnable()):
         logFile.logInfo("root 成功")
-
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****显示测试开始********")
-
+    logFile.logInfo("*****导入配置包测试开始********")
     try:
-        iniFile.setSection("Display")
-        logFile.logInfo("检查当前亮度")
-        brightness = testApi.getBrightness()
-        if brightness < OSApiErrorCode.OK:
-            iniFile.addKeyValue("Display", "brightness", "fail->%d" % brightness)
-            logFile.logErr("brightness： %s" % commFunc.dealOSErrCode(brightness))
-        else:
-            iniFile.addKeyValue("Display", "brightness", str(brightness))
-            logFile.logInfo("brightness ： %d" % brightness)
+        section = "ConfigImport"
+        exist_option = "exist"
+        import_option = "import"
+        iniFile.setSection(section)
+        # 获取预期的so库
+        # 从sdcard 推送配置包到/privdata下面
+        unzipPackageName = commFunc.getConfigDireName()
+        # 判断配置包存在与否
+        shell.SendCommand("ls %s |grep %s" % (commFunc.getExternalStorageAbsolutePath(), unzipPackageName))
+        searchPackageName = shell.successMsg.strip()
+        # 判断sdcard是否存在配置包
+        try:
+            if unzipPackageName in searchPackageName and ".zip" == os.path.splitext(searchPackageName)[1]:
+                iniFile.addKeyValue(section, exist_option, "1")
+            else:
+                iniFile.addKeyValue(section, exist_option, "0")
+        except Exception as e:
+            logFile.logErr(str(e))
+            iniFile.addKeyValue(section, exist_option, "0")
 
-        logFile.logInfo("检查当前字体大小")
-        size = testApi.getFontSize()
-        if size < OSApiErrorCode.OK:
-            iniFile.addKeyValue("Display", "size", "fail->%d" % size)
-            logFile.logErr("size： %s" % commFunc.dealOSErrCode(size))
+        # 复制到/privdata
+        fileOperate.copyFile(os.path.join(commFunc.getExternalStorageAbsolutePath(), searchPackageName), "/privdata/")
+        shell.SendCommand("ls /privdata")
+        if searchPackageName in shell.successMsg:
+            iniFile.addKeyValue(section, import_option, "1")
         else:
-            iniFile.addKeyValue("Display", "size", str(size))
-            logFile.logInfo("size ： %d" % size)
+            iniFile.addKeyValue(section, import_option, "0")
 
-        # 截图墙纸
-        testApi.doScreenCapture()
     except Exception as e:
         logFile.logErr(str(e))
 
