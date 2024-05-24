@@ -63,7 +63,7 @@ if __name__ == '__main__':
             iniFile.addKeyValue(section, exist_option, "0")
 
         # 复制到/privdata
-        fileOperate.copyFile(os.path.join(commFunc.getExternalStorageAbsolutePath(), searchPackageName), "/privdata/")
+        fileOperate.moveFile(os.path.join(commFunc.getExternalStorageAbsolutePath(), searchPackageName), "/privdata/")
         shell.SendCommand("ls /privdata")
         if searchPackageName in shell.successMsg:
             iniFile.addKeyValue(section, import_option, "1")

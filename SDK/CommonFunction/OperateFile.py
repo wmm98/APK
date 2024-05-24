@@ -41,6 +41,9 @@ class OperateFile:
     def copyFile(self, source, destination):
         shell.SendCommand("cp -rf %s %s" % (source, destination))
 
+    def moveFile(self, source, destination):
+        shell.SendCommand("mv -f %s %s" % (source, destination))
+
     def osCreateDirectory(self, DireName):
         os.mkdir(DireName)
 
