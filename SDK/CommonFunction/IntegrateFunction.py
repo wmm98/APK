@@ -100,6 +100,10 @@ class CommFunction(ADBInterface):
                 if getFunc == OSApiConstants.ABLE_TYPE_ENABLE:
                     enableFlag = True
                     break
+        if enableFlag:
+            logFile.logInfo("enable的状态：1")
+        else:
+            logFile.logInfo("enable的状态：0")
         return enableFlag
 
     def enableGet(self):

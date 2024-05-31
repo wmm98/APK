@@ -233,7 +233,8 @@ class OSApi(TelApi):
         return self.getApplicationControl().getLauncher()
 
     def installApk(self, apkFilePath):
-        return self.getApplicationControl().installApk(apkFilePath)
+        result = self.getApplicationControl().installApk(apkFilePath)
+        return {"mResult": result.mResult, "mResultMessage": result.mResultMessage}
 
     def unInstallApp(self, packageName):
         result = self.getApplicationControl().unInstallApp(packageName)
