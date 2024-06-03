@@ -59,16 +59,18 @@ if __name__ == '__main__':
 
     try:
         logFile.logInfo("检查以太网状态")
+        option = Config.option_eth0
         eth_enable = testApi.getEthernetEnable()
         if eth_enable == OSApiConstants.ABLE_TYPE_ENABLE:
-            iniFile.addKeyValue(Config.section_sys_default_settings, Config.option_eth0, Config.btn_open)
-            logFile.logInfo("%s当前的状态：%s" % (Config.option_eth0, Config.btn_open))
+            iniFile.addKeyValue(Config.section_sys_default_settings, option, Config.btn_open)
+            logFile.logInfo("%s当前的状态：%s" % (option, Config.btn_open))
         elif eth_enable == OSApiConstants.ABLE_TYPE_DISABLE:
-            iniFile.addKeyValue(Config.section_sys_default_settings, Config.option_eth0, Config.btn_off)
-            logFile.logInfo("%s当前的状态：%s" % (Config.option_eth0, Config.btn_off))
+            iniFile.addKeyValue(Config.section_sys_default_settings, option, Config.btn_off)
+            logFile.logInfo("%s当前的状态：%s" % (option, Config.btn_off))
         else:
             value = commFunc.dealOSErrCode(eth_enable)
-            logFile.logErr("%s当前的状态：%s" % (Config.option_eth0, value))
+            iniFile.addKeyValue(Config.section_sys_default_settings, option, value)
+            logFile.logErr("%s当前的状态：%s" % (option, value))
     except Exception as e:
         logFile.logErr(str(e))
 
@@ -79,7 +81,7 @@ if __name__ == '__main__':
             iniFile.addKeyValue(Config.section_sys_default_settings, Config.option_bt, Config.btn_open)
             logFile.logInfo("%s当前的状态：%s" % (Config.option_bt, Config.btn_open))
         elif bt_enable == OSApiConstants.ABLE_TYPE_DISABLE:
-            iniFile.addKeyValue(Config.section_sys_default_settings, Config.option_eth0, Config.btn_off)
+            iniFile.addKeyValue(Config.section_sys_default_settings, Config.option_bt, Config.btn_off)
             logFile.logInfo("%s当前的状态：%s" % (Config.option_bt, Config.btn_off))
         else:
             value = commFunc.dealOSErrCode(bt_enable)
@@ -241,6 +243,19 @@ if __name__ == '__main__':
             logFile.logInfo("%s当前的音量大小：%s" % (option, str(voice_call_volume)))
         else:
             value = commFunc.dealOSErrCode(voice_call_volume)
+            logFile.logErr("%s获取的错误信息：%s" % (option, value))
+    except Exception as e:
+        logFile.logErr(str(e))
+
+    try:
+        logFile.logInfo("检查当前的字体大小")
+        font_size = testApi.getFontSize()
+        option = Config.option_font_size
+        if font_size >= 0:
+            iniFile.addKeyValue(Config.section_sys_default_settings, option, str(font_size))
+            logFile.logInfo("%s当前的字体大小：%s" % (option, str(font_size)))
+        else:
+            value = commFunc.dealOSErrCode(font_size)
             logFile.logErr("%s获取的错误信息：%s" % (option, value))
     except Exception as e:
         logFile.logErr(str(e))
