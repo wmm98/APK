@@ -34,3 +34,8 @@ class BaseFunction(CommFunction):
         cmd = "getprop ro.build.type"
         shell.SendCommand(cmd)
         return shell.successMsg
+
+    def selinuxAuth(self):
+        cmd = "getenforce"
+        shell.SendCommand(cmd)
+        return shell.successMsg
