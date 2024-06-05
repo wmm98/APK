@@ -39,3 +39,8 @@ class BaseFunction(CommFunction):
         cmd = "getenforce"
         shell.SendCommand(cmd)
         return shell.successMsg
+
+    def getInternalModel(self):
+        cmd = "getprop ro.internal.model"
+        shell.SendCommand(cmd)
+        return shell.successMsg
