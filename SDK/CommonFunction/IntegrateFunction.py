@@ -106,8 +106,14 @@ class CommFunction(ADBInterface):
             logFile.logInfo("enable的状态：0")
         return enableFlag
 
-    def enableGet(self):
-        pass
+    def enableSet(self, setFunc):
+        enableFlag = False
+        for i in range(Config.checkTimes):
+            self.waitSetResponse()
+            if setFunc == OSApiErrorCode.OK:
+                enableFlag = True
+                break
+        return enableFlag
 
     def disableGet(self):
         pass

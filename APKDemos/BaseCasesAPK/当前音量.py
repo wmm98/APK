@@ -55,12 +55,10 @@ if __name__ == '__main__':
     # mediaVolume
     section = Config.section_volume
     iniFile.setSection(section)
-    set_volume = 50
     try:
         option = Config.option_stream_music
-        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_MUSIC, set_volume)):
-            logFile.logErr("无法修改媒体音量值")
         mediaCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_MUSIC)
+
         if mediaCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(mediaCurrentVolumeValue))
         else:
@@ -70,8 +68,6 @@ if __name__ == '__main__':
 
     try:
         option = Config.option_stream_voice_call
-        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_VOICE_CALL, set_volume)):
-            logFile.logErr("无法修改通话音量值")
         voiceCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_VOICE_CALL)
         if voiceCallCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(voiceCallCurrentVolumeValue))
@@ -82,8 +78,6 @@ if __name__ == '__main__':
 
     try:
         option = Config.option_stream_alarm
-        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_ALARM, set_volume)):
-            logFile.logErr("无法修改闹钟音量值")
         alarmCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_ALARM)
         if alarmCallCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(alarmCallCurrentVolumeValue))
@@ -94,8 +88,6 @@ if __name__ == '__main__':
 
     try:
         option = Config.option_stream_system
-        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_SYSTEM, set_volume)):
-            logFile.logErr("无法修改系统音量值")
         systemCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_SYSTEM)
         if systemCallCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(systemCallCurrentVolumeValue))
