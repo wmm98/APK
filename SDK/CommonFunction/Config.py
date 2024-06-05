@@ -44,5 +44,10 @@ class Config:
     option_autosync = "autosync"
     option_autotimezone = "autotimezone"
     option_sleep_time = "sleep_time"
-    # 系统类型字段
+    # 音量section
+    section_volume = "Volume"
+
+    # 音量最大值，最小值
+    min_volume = 0
+    max_volume = 100
 

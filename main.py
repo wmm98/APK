@@ -7,6 +7,7 @@ from SDK.CommonFunction.IntegrateFunction import CommFunction
 from SDK.CommonFunction.OperateFile import OperateFile
 from SDK.CommonFunction.OperateFile import OutPutTestResult, OutPutIniResult
 from SDK.CommonFunction.Config import Config
+from SDK.CommonFunction.Page.BaseCaseFunction import BaseFunction
 from kivy.app import App
 import sys
 from kivy.app import App
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     iniFile.createIniFile()
     logFile = OutPutTestResult()
     logFile.createFile()
+    baseFunc = BaseFunction()
 
     # 创建存放测试结果的目录， 创建存放测试数据的文件,初始化后在sdcard/TestTeam的路径下
     logFile.logInfo("root 设备")
@@ -40,23 +42,57 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****定制客户测试开始********")
-    try:
-        section = "ConfigVersion"
-        option = "customer"
-        iniFile.setSection(section)
-        # 获取预期的so库
-        shell.SendCommand("cat %s | grep %s" % (commFunc.getIniFilePath(), option))
-        customName = shell.successMsg.split("=")[1]
-        logFile.logInfo("预为定制客户为：%s" % customName)
-        shell.SendCommand("getprop persist.sys.provision |grep %s" % customName)
-        if shell.successMsg:
-            iniFile.addKeyValue(section, option, shell.successMsg)
-            logFile.logInfo("系统显示的定制客户名为：%s" % shell.successMsg)
-        else:
-            iniFile.addKeyValue(section, option, "")
-            logFile.logErr("系统无定制客户名字， 请检查")
+    logFile.logInfo("****音量设置与功能测试开始********")
 
+    from jnius import autoclass
+    # 获取 AudioManager 类
+    context = Context.getApplicationContext()
+    AudioManager = autoclass('android.media.AudioManager')
+    # 获取 Context 类
+    d_Context = autoclass('android.content.Context')
+    audioManager = context.getSystemService(d_Context.AUDIO_SERVICE)
+
+    # mediaVolume
+    section = Config.section_volume
+    iniFile.setSection(section)
+    try:
+        option = Config.option_stream_music
+        mediaCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_MUSIC)
+
+        if mediaCurrentVolumeValue >= 0:
+            iniFile.addKeyValue(section, option, str(mediaCurrentVolumeValue))
+        else:
+            iniFile.addKeyValue(section, option, baseFunc.dealOSErrCode(mediaCurrentVolumeValue))
+    except Exception as e:
+        logFile.logErr(str(e))
+
+    try:
+        option = Config.option_stream_voice_call
+        voiceCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_VOICE_CALL)
+        if voiceCallCurrentVolumeValue >= 0:
+            iniFile.addKeyValue(section, option, str(voiceCallCurrentVolumeValue))
+        else:
+            iniFile.addKeyValue(section, option, baseFunc.dealOSErrCode(voiceCallCurrentVolumeValue))
+    except Exception as e:
+        logFile.logErr(str(e))
+
+    try:
+        option = Config.option_stream_alarm
+        alarmCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_ALARM)
+        if alarmCallCurrentVolumeValue >= 0:
+            iniFile.addKeyValue(section, option, str(alarmCallCurrentVolumeValue))
+        else:
+            iniFile.addKeyValue(section, option, baseFunc.dealOSErrCode(alarmCallCurrentVolumeValue))
+    except Exception as e:
+        logFile.logErr(str(e))
+
+    try:
+        option = Config.option_stream_system
+        systemCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_SYSTEM)
+        if systemCallCurrentVolumeValue >= 0:
+            iniFile.addKeyValue(section, option, str(systemCallCurrentVolumeValue))
+        else:
+            iniFile.addKeyValue(section, option, baseFunc.dealOSErrCode(systemCallCurrentVolumeValue))
     except Exception as e:
         logFile.logErr(str(e))
 
