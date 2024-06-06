@@ -12,8 +12,6 @@ from kivy.app import App
 import sys
 from kivy.app import App
 from jnius import autoclass
-import os
-
 
 if __name__ == '__main__':
 
@@ -43,13 +41,17 @@ if __name__ == '__main__':
         logFile.logErr("root 失败")
 
     logFile.logInfo("****音量设置与功能测试开始********")
-    # mediaVolume
     section = Config.section_volume
     iniFile.setSection(section)
+    set_volume = 100
     try:
         option = Config.option_stream_music
+        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_MUSIC, set_volume)):
+            logFile.logErr("无法修改媒体音量值")
+        logFile.logInfo("媒体音量修改成功")
+        commFunc.waitSetResponse()
         mediaCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_MUSIC)
-
+        logFile.logInfo("当前的媒体音量为：%d" % mediaCurrentVolumeValue)
         if mediaCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(mediaCurrentVolumeValue))
         else:
@@ -59,7 +61,12 @@ if __name__ == '__main__':
 
     try:
         option = Config.option_stream_voice_call
+        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_VOICE_CALL, set_volume)):
+            logFile.logErr("无法修改通话音量值")
+        logFile.logInfo("通话音量修改成功")
+        commFunc.waitSetResponse()
         voiceCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_VOICE_CALL)
+        logFile.logInfo("当前的通话音量为：%d" % voiceCallCurrentVolumeValue)
         if voiceCallCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(voiceCallCurrentVolumeValue))
         else:
@@ -69,7 +76,12 @@ if __name__ == '__main__':
 
     try:
         option = Config.option_stream_alarm
+        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_ALARM, set_volume)):
+            logFile.logErr("无法修改闹钟音量值")
+        logFile.logInfo("闹钟音量修改成功")
+        commFunc.waitSetResponse()
         alarmCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_ALARM)
+        logFile.logInfo("当前alarm音量为： %d" % alarmCallCurrentVolumeValue)
         if alarmCallCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(alarmCallCurrentVolumeValue))
         else:
@@ -79,7 +91,12 @@ if __name__ == '__main__':
 
     try:
         option = Config.option_stream_system
+        if not commFunc.enableSet(testApi.setSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_SYSTEM, set_volume)):
+            logFile.logErr("无法修改系统音量值")
+        logFile.logInfo("系统音量修改成功")
+        commFunc.waitSetResponse()
         systemCallCurrentVolumeValue = testApi.getSystemStreamVolumeConfigure(OSApiConstants.STREAM_TYPE_SYSTEM)
+        logFile.logInfo("当前system音量为： %d" % systemCallCurrentVolumeValue)
         if systemCallCurrentVolumeValue >= 0:
             iniFile.addKeyValue(section, option, str(systemCallCurrentVolumeValue))
         else:

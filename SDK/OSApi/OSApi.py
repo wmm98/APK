@@ -118,7 +118,7 @@ class OSApi(TelApi):
              meta = meta_cls(context)
              setSystemStreamVolumeConfigure(meta.AudioManager.STREAM_VOICE_CALL, 10)
         """
-        return self.getSystemControl().setSystemStreamVolumeConfigure(self, StreamType, level)
+        return self.getSystemControl().setSystemStreamVolumeConfigure(StreamType, level)
 
     def getSystemStreamVolumeConfigure(self, StreamType):
         return self.getSystemControl().getSystemStreamVolumeConfigure(StreamType)

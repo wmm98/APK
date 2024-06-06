@@ -11,7 +11,8 @@ class Config:
     # 检查次数
     checkTimes = 3
     # 等待set 响应时间
-    waitSetRespTime = 2
+    waitSetRespTime = 3
+    waitGetResTime = 3
 
     projectPath = os.getcwd()
     # print("Config path:", projectPath)
