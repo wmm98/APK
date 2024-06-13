@@ -52,6 +52,9 @@ class Config:
     option_navigation_bar = "navigation_bar"
     option_statusbar_drop = "statusbar_drop"
 
+    section_language = "Language"
+    option_language = "language"
+
     # 音量最大值，最小值
     min_volume = 0
     max_volume = 100
