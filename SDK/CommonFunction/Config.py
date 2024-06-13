@@ -11,7 +11,7 @@ class Config:
     # 检查次数
     checkTimes = 3
     # 等待set 响应时间
-    waitSetRespTime = 3
+    waitSetRespTime = 5
     waitGetResTime = 3
 
     projectPath = os.getcwd()
@@ -47,6 +47,10 @@ class Config:
     option_sleep_time = "sleep_time"
     # 音量section
     section_volume = "Volume"
+    section_system_ui = "SystemUI"
+    option_status_bar = "status_bar"
+    option_navigation_bar = "navigation_bar"
+    option_statusbar_drop = "statusbar_drop"
 
     # 音量最大值，最小值
     min_volume = 0
