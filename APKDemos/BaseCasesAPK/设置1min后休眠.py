@@ -41,27 +41,29 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****修改为1min后休眠********")
+    logFile.logInfo("*****修改为1min后不休眠********")
 
     try:
         section = Config.section_power
+        iniFile.setSection(section)
         if testApi.getLockScreenEnable() == OSApiConstants.ABLE_TYPE_ENABLE:
             if not commFunc.enableSet(testApi.setLockScreenEnable(OSApiConstants.ABLE_TYPE_DISABLE)):
                 logFile.logErr("修改为不锁屏失败")
-            commFunc.waitSetResponse()
-            iniFile.setSection(section)
-            lockScreenEnable = testApi.getLockScreenEnable()
-            iniFile.addKeyValue(section, Config.option_screen_lock, str(lockScreenEnable))
-            logFile.logInfo("lockScreenEnable ： %s" % str(lockScreenEnable))
-        if testApi.getScreenOffTimeoutConfiguration() != 60 * 1000:
-            if not commFunc.enableSet(testApi.setScreenOffTimeoutConfiguration(60 * 1000)):
+            else:
+                logFile.logErr("修改为不锁屏成功")
+        commFunc.waitSetResponse()
+        lockScreenEnable = testApi.getLockScreenEnable()
+        iniFile.addKeyValue(section, Config.option_screen_lock, str(lockScreenEnable))
+        logFile.logInfo("lockScreenEnable ： %s" % str(lockScreenEnable))
+        if testApi.getScreenOffTimeoutConfiguration() != OSApiConstants.TIMEOUT_1_MINUTE:
+            if not commFunc.enableSet(testApi.setScreenOffTimeoutConfiguration(OSApiConstants.TIMEOUT_1_MINUTE)):
                 logFile.logErr("接口修改为1min后休眠失败")
             else:
-                logFile.logInfo("接口显示修改为1min后休眠成功")
-            commFunc.waitSetResponse()
-            getScreenOffTimeout = testApi.getScreenOffTimeoutConfiguration()
-            iniFile.addKeyValue(section, Config.option_sleep_time, str(getScreenOffTimeout))
-            logFile.logInfo("ScreenOffTimeoutConfiguration ： %s" % str(getScreenOffTimeout))
+                logFile.logInfo("接口修改为1min后休眠成功")
+        commFunc.waitSetResponse()
+        getScreenOffTimeout = testApi.getScreenOffTimeoutConfiguration()
+        iniFile.addKeyValue(section, Config.option_sleep_time, str(getScreenOffTimeout))
+        logFile.logInfo("ScreenOffTimeoutConfiguration ： %s" % str(getScreenOffTimeout))
     except Exception as e:
         logFile.logErr(str(e))
 
