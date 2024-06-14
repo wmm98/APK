@@ -52,7 +52,7 @@ class OSApi(TelApi):
         return self.getSystemControl().getWifiApEnable()
 
     def setLockScreenEnable(self, enable):
-        return self.getSystemControl().setLockScreenEnable(self, enable)
+        return self.getSystemControl().setLockScreenEnable(enable)
 
     def getLockScreenEnable(self):
         return self.getSystemControl().getLockScreenEnable()

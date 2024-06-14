@@ -73,3 +73,4 @@ class OSApiConstants:
 if __name__ == '__main__':
     print(OSApiConstants().TIMEOUT_2_MINUTES)
     print(type(OSApiConstants().TIMEOUT_2_MINUTES))
+    print(OSApiConstants.TIMEOUT_NEVER)

@@ -41,7 +41,7 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-    logFile.logInfo("*****修改为永久不休眠********")
+    logFile.logInfo("*****修改为15s后休眠********")
 
     try:
         section = Config.section_power
@@ -53,11 +53,11 @@ if __name__ == '__main__':
             lockScreenEnable = testApi.getLockScreenEnable()
             iniFile.addKeyValue(section, Config.option_screen_lock, str(lockScreenEnable))
             logFile.logInfo("lockScreenEnable ： %s" % str(lockScreenEnable))
-        if testApi.getScreenOffTimeoutConfiguration() != OSApiConstants.TIMEOUT_NEVER:
-            if not commFunc.enableSet(testApi.setScreenOffTimeoutConfiguration(OSApiConstants.TIMEOUT_NEVER)):
-                logFile.logErr("接口修改为1min后休眠失败")
+        if testApi.getScreenOffTimeoutConfiguration() != 15 * 1000:
+            if not commFunc.enableSet(testApi.setScreenOffTimeoutConfiguration(15 * 1000)):
+                logFile.logErr("接口修改为15s后休眠失败")
             else:
-                logFile.logInfo("接口显示修改为1min后休眠成功")
+                logFile.logInfo("接口显示修改为15s后休眠成功")
             commFunc.waitSetResponse()
             getScreenOffTimeout = testApi.getScreenOffTimeoutConfiguration()
             iniFile.addKeyValue(section, Config.option_sleep_time, str(getScreenOffTimeout))
