@@ -56,6 +56,7 @@ class Config:
     option_language = "language"
 
     section_power = "Power"
+    section_display = "Display"
 
     # 音量最大值，最小值
     min_volume = 0

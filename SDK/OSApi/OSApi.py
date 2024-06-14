@@ -293,7 +293,7 @@ class OSApi(TelApi):
 
     def setBrightness(self, level):
         # 0~255
-        return self.getApplicationControl().setBrightness(level)
+        return self.getDisplayControl().setBrightness(level)
 
     def getBrightness(self):
         return self.getDisplayControl().getBrightness()
