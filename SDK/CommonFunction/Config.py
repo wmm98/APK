@@ -58,6 +58,8 @@ class Config:
     section_power = "Power"
     section_display = "Display"
 
+    section_connection = "Connection"
+
     # 音量最大值，最小值
     min_volume = 0
     max_volume = 100

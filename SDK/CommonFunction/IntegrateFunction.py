@@ -24,6 +24,10 @@ class CommFunction(ADBInterface):
     def __init__(self):
         pass
 
+    def pressHomeKey(self):
+        shell.SendCommand("input keyevent 3")
+        self.timeSleep(1)
+
     def getConfigDirePath(self):
         expectResultPath = os.path.join(self.getExternalStorageAbsolutePath(), Config.expectResult)
         shell.SendCommand("ls %s" % expectResultPath)
