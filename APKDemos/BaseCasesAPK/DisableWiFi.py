@@ -40,7 +40,7 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-        logFile.logInfo("*****启用wifi上网********")
+        logFile.logInfo("*****禁用wifi上网********")
 
     try:
         section = Config.section_connection

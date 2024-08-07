@@ -40,26 +40,40 @@ if __name__ == '__main__':
     else:
         logFile.logErr("root 失败")
 
-        logFile.logInfo("*****获取当前语言********")
+        logFile.logInfo("*****禁用wifi，mobile上网********")
 
-    # try:
-    # print(testApi.getLanguageConfiguration())
-    Locale = autoclass("java.util.Locale")
-
-    currentLocale = Locale.getDefault()
-    print(currentLocale)
-    currentLanguage = currentLocale.getLanguage()
-    print(currentLanguage)
-    currentCountry = currentLocale.getCountry()
-    print(currentCountry)
-    currentLocaleString = currentLocale.toString()
-    print(currentLocaleString)
-
-    # print(currentLocale.getDisplayLanaguage())
-    print(currentLocale.getDisplayName())
-
-    # except Exception as e:
-    #     logFile.logErr(str(e))
+    try:
+        section = Config.section_connection
+        iniFile.setSection(section)
+        if testApi.getWifiEnable() != OSApiConstants.ABLE_TYPE_DISABLE:
+            if not commFunc.enableSet(testApi.setWifiEnable(OSApiConstants.ABLE_TYPE_DISABLE)):
+                logFile.logErr("失能wifi开关失败")
+            else:
+                logFile.logInfo("失能wifi开关成功")
+                commFunc.waitSetResponse()
+        current_data = testApi.getWifiEnable()
+        iniFile.addKeyValue(section, Config.option_wifi, str(current_data))
+        logFile.logInfo("当前wifi 按钮状态 ： %s" % str(current_data))
+        if current_data != OSApiConstants.ABLE_TYPE_DISABLE:
+            logFile.logErr("wifi开关失能失败")
+        else:
+            logFile.logInfo("wifi开关失能成功")
+        # 关闭mobile
+        if testApi.getMobileDataEnable() != OSApiConstants.ABLE_TYPE_DISABLE:
+            if not commFunc.enableSet(testApi.setMobileDataEnable(OSApiConstants.ABLE_TYPE_DISABLE)):
+                logFile.logErr("失能mobile data开关失败")
+            else:
+                logFile.logInfo("失能mobile data开关成功")
+                commFunc.waitSetResponse()
+        current_data = testApi.getMobileDataEnable()
+        iniFile.addKeyValue(section, Config.option_mobile, str(current_data))
+        logFile.logInfo("当前mobile data按钮状态 ： %s" % str(current_data))
+        if current_data != OSApiConstants.ABLE_TYPE_DISABLE:
+            logFile.logErr("mobile data开关失能失败")
+        else:
+            logFile.logInfo("mobile data开关失能成功")
+    except Exception as e:
+        logFile.logErr(str(e))
 
     # 测试最后复制log出来
     iniFile.setSection("EndFlag")
