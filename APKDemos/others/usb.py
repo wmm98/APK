@@ -15,6 +15,7 @@ from kivy.app import App
 from jnius import autoclass
 import os
 import time
+import datetime
 
 if __name__ == '__main__':
 
@@ -48,37 +49,42 @@ if __name__ == '__main__':
 
     logFile.logInfo("*********U盘识别测试试开始********")
     try:
+        # 测试前先捕捉log
+        # myShell.Exec_command(["logcat > /sdcard/usb_logcat.txt &"], True, True)
         flag = 0
-        fileOperate.echoInfo("/sdcard/usb.txt", "")
-        print("***********************")
+        usb_result = "/sdcard/usb_result.txt"
+        write_data_txt = "usb_write_in.txt"
+        fileOperate.echoInfo(usb_result, "")
+        now = datetime.datetime.now()
         while True:
+            flag += 1
             while True:
-                result = myShell.Exec_command(["ls /storage"], True, True)
-                fileOperate.appendInfo("/sdcard/usb.txt", "%s" % ",".join(result.success_msg))
-                # print(shell.SendCommand("ls /storage"))
-                print("result:", result.result)
-                print("success message:", result.success_msg)
-                if len(result.success_msg) > 2:
-                    print("到这里来")
-                    flag += 1
-                    fileOperate.appendInfo("/sdcard/usb.txt", "识别成功%d次" % flag)
+                result = myShell.Exec_command(["ls /mnt/media_rw"], True, True)
+                usb_name = result.success_msg.strip()
+                if len(result.success_msg) > 0:
+                    cur_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True, True).success_msg
+                    fileOperate.appendInfo(usb_result, "%s: U盘插入%d次" % (cur_time, flag))
+                    # 写入数据
+                    fileOperate.echoInfo("/mnt/media_rw/%s/%s" % (usb_name, write_data_txt), "%d" % flag)
+                    # 查询写入是否正确
+                    usb_text = myShell.Exec_command(["cat /mnt/media_rw/%s/%s" % (usb_name, write_data_txt)], True, True)
+                    if "%d" % flag in usb_text.success_msg:
+                        cur_success_write_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True, True).success_msg
+                        fileOperate.appendInfo(usb_result, "%s: 写入成功%d次" % (cur_success_write_time, flag))
+                    else:
+                        cur_fail_write_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True, True).success_msg
+                        fileOperate.appendInfo(usb_result, "%s: 写入失败%d次" % (cur_fail_write_time, flag))
                     break
-                    # fileOperate.echoInfo("/sdcard/usb.txt", "")
-                time.sleep(0.3)
+                time.sleep(0.1)
 
             while True:
-                result = myShell.Exec_command(["ls /storage"], True, True)
-                fileOperate.appendInfo("/sdcard/usb.txt", "%s" % ",".join(result.success_msg))
-                # print(shell.SendCommand("ls /storage"))
-                print("result:", result.result)
-                print("success message:", result.success_msg)
-                if len(result.success_msg) == 2:
-                    print("到这里来")
-                    flag += 1
-                    fileOperate.appendInfo("/sdcard/usb.txt", "U盘断开状态")
+                result = myShell.Exec_command(["ls /mnt/media_rw"], True, True)
+                if len(result.success_msg) == 0:
+                    cur_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True, True).success_msg
+                    fileOperate.appendInfo(usb_result, "%s: U盘断开%d次" % (cur_time, flag))
                     break
-                    # fileOperate.echoInfo("/sdcard/usb.txt", "")
-                time.sleep(0.3)
+                time.sleep(0.1)
+            fileOperate.appendInfo(usb_result, "******压测%d次******" % flag)
     except Exception as e:
         print(e)
         logFile.logErr(e)
