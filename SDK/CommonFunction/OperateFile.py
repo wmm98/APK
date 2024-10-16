@@ -20,8 +20,10 @@ class OperateFile:
         shell.SendCommand("echo %s > %s" % (info, fileName))
 
     def appendInfo(self, fileName, info):
-        # adb shell echo "Your message" >> /path/to/your/file
-        shell.SendCommand("echo info: %s >> %s" % (info, fileName))
+        # adb shell echo "Your message" >> /path/to/your/file   "echo info: %s >> %s" % (info, fileName)
+        cmd = "echo \"info: %s\" >> %s" % (info, fileName)
+        print(cmd)
+        shell.SendCommand(cmd)
 
     def appendErr(self, fileName, err):
         shell.SendCommand("echo err: %s >> %s" % (err, fileName))
