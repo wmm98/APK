@@ -67,12 +67,15 @@ if __name__ == '__main__':
                     # 写入数据
                     fileOperate.echoInfo("/mnt/media_rw/%s/%s" % (usb_name, write_data_txt), "%d" % flag)
                     # 查询写入是否正确
-                    usb_text = myShell.Exec_command(["cat /mnt/media_rw/%s/%s" % (usb_name, write_data_txt)], True, True)
+                    usb_text = myShell.Exec_command(["cat /mnt/media_rw/%s/%s" % (usb_name, write_data_txt)], True,
+                                                    True)
                     if "%d" % flag in usb_text.success_msg:
-                        cur_success_write_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True, True).success_msg
+                        cur_success_write_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True,
+                                                                      True).success_msg
                         fileOperate.appendInfo(usb_result, "%s: 写入成功%d次" % (cur_success_write_time, flag))
                     else:
-                        cur_fail_write_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True, True).success_msg
+                        cur_fail_write_time = myShell.Exec_command(["date +%Y-%m-%d\ %H:%M:%S.%3N"], True,
+                                                                   True).success_msg
                         fileOperate.appendInfo(usb_result, "%s: 写入失败%d次" % (cur_fail_write_time, flag))
                     break
                 time.sleep(0.1)
@@ -87,7 +90,7 @@ if __name__ == '__main__':
             fileOperate.appendInfo(usb_result, "******压测%d次******" % flag)
     except Exception as e:
         print(e)
-        logFile.logErr(e)
+        logFile.logErr(str(e))
 
     # 测试最后复制log出来
     # iniFile.setSection("EndFlag")
